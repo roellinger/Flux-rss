@@ -1,6 +1,6 @@
 <?php
 include("header1.php");
-
+  // lol
  if (time()-$_SESSION['derniereaction'] > 60 * 60) {
 		
 		
