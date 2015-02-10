@@ -299,6 +299,8 @@ private $_bdd;
                                 ':content' => $content
      
                             ));	
+							
+							header("location: accueil.php");
 		}
 		
 		public function getTweet(){

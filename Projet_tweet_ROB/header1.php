@@ -2,13 +2,13 @@
 include("model/user.php");
 
 $photo = new user();
-$photo1 = $photo->photoUser();
+$photo1 = $photo->photoUserPerso();
 
 if(isset($_POST['deco'])){
 
 $photo->deconnexion($_POST['deco']);
 }
-// test
+
 ?>
 <!doctype html>
 <html>
