@@ -8,7 +8,7 @@ if(isset($_POST['deco'])){
 
 $photo->deconnexion($_POST['deco']);
 }
-
+// test
 ?>
 <!doctype html>
 <html>
