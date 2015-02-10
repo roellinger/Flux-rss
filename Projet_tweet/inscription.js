@@ -94,19 +94,6 @@ $('.count').css("display","none");
 
  })
  
- $('#centerbarre li').hover(function(){
- 
-	$("#centerbarre li p").addClass("hover");
- 
- });
- 
- $("#centerbarre li").hover(function(){
-   $(this).addClass("hover");
- },function(){
-   $(this).removeClass("hover");
- });
- 
- 
 });
  
 
