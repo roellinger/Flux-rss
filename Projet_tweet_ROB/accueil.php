@@ -1,25 +1,29 @@
 <?php
 include("header1.php");
-  // lol
- if (time()-$_SESSION['derniereaction'] > 60 * 60) {
-		
-		
-            session_destroy();
-            setcookie("userid");
-		header("location:index.php");
-		
-		
+
+ if (time()-$_SESSION['derniereaction'] > 3600) {
+			
+session_destroy();
+setcookie("userid");
+header("location:index.php");
+			
 }else{
 $accueil = new user();
 
 $accueil1 = $accueil->activate();
-$photo1 = $accueil->photoUser();
+$photo1 = $accueil->photoUserPerso();
 $accueil2 = $accueil->getSuggestUser1();
 $getTweet = $accueil->getTweet();
 
-$countFollow =$accueil->countFollow();
-$countFollower =$accueil->countFollower();
-$countTweet =$accueil->countTweet();
+$countFollow =$accueil->countFollowPerso();
+$countFollower =$accueil->countFollowerPerso();
+$countTweet =$accueil->countTweetPerso();
+
+if(isset($_POST['suivre'])){
+
+$accueil->FollowUser();
+
+}
 
 if(isset($_POST['tweet'])){
 
@@ -59,6 +63,7 @@ if($v['activate'] == 1) {
 <form action="accueil.php" method="post">
 <img src="up/<?php echo $v1['type']; ?>" class="avatar2" width="32"  height="32"  alt="avatar" /><textarea type="texte" name="publie" id="publie" placeholder="Quoi de neuf ?"/></textarea>
 <?php } ?>
+
 <input style="display:none" type="submit" name="tweet" class="publie1" value="Tweeter"/>
 </form><p class='count'>140</p>
 
@@ -73,12 +78,12 @@ $cont = substr($v3['content'], 0, 45) . "...";
 }
 ?>
 
-<a href=""><div id="contenu">
+<div id="contenu">
 
 <img src="up/<?php echo $v3['type']; ?>" width="50" height="50" alt="image_profil"/> 
-<p class="ahaha"><span><?php echo $v3['fullname'] . " "; ?></span><span><?php echo "@" . $v3['login'] . " " . $v3['created']; ?></span></p>
+<p class="ahaha"><span><a href="profil.php?id=<?php echo $v3['id_media']; ?>"><?php echo $v3['fullname'] . " "; ?></a></span><span><?php echo "@" . $v3['login'] . " " . $v3['created']; ?></span></p>
 <p><?php echo $cont; ?></p>
-</div></a>
+</div>
 <?php } ?>
 </div>
 
@@ -86,17 +91,17 @@ $cont = substr($v3['content'], 0, 45) . "...";
 <div class="publication">
 
 <h5>Suggestions</h5>
-
+<form action="accueil.php" method="post" >
 <?php foreach($accueil2 as $v2) { ?>
 <div class="suggest">
-<p class="align"><img class="lol4" src="up/<?php echo $v2['type']; ?>" class="avatar2" width="49"  height="49"  alt="avatar" /></p><p class="haut"><a href=""><?php echo $v2['login']; ?></a> @<?php echo  $v2['login'] ?></p>
-<form action="accueil.php" method="post" >
-<input type="submit" name="submit2" id="submit2" value="Suivre" />
+<p class="align"><img class="lol4" src="up/<?php echo $v2['type']; ?>" class="avatar2" width="49"  height="49"  alt="avatar" /></p><p class="haut"><a href="profil.php?id=<?php echo $v2['id_user']; ?>"><?php echo $v2['login']; ?></a><span class="petit"> @<?php echo  $v2['login'] ?></span></p>
+<input type="checkbox" name="checkbox[]" id="submit2" value="<?php echo $v2['id_user']; ?>" />
 
-</form>
 <?php } ?>
+<input type="submit" name="suivre" value="suivre" id="suivre">
+</form>
 </div>
-<div id="bottom">
+<div class="bottom">
 </div>
 </div>
 </div>
