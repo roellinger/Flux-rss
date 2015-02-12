@@ -18,13 +18,10 @@ class Bdd
 
 		public function execute($query, $attr)
 		{
-			// var_dump($attr);
-			// var_dump($query);
 			$request = $this->_bdd->prepare($query);
 			$request->execute($attr);
 			$data = $request->fetchAll();
 			
-			// var_dump($request);
 			return $data;
 		}
 
