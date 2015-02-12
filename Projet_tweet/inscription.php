@@ -6,9 +6,7 @@ include("model/user.php");
 if(isset($_POST['submit1'])){
 
 $inscription = new user();
-$inscription->inscription($_POST['login'], $_POST['nom1'], $_POST['mail1'],$_POST['mdp1']);
-
-//$inscription->inscription(htmlentities($_POST['login']), htmlentities($_POST['nom1']), htmlentities($_POST['mail1']), htmlentities($_POST['mdp1']));
+$inscription->inscription($_POST['login'], $_POST['nom1'], $_POST['mail1'], $_POST['mdp1']);
 
 }
 ?>
