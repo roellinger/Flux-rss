@@ -2,24 +2,13 @@
 include("model/user.php");
 
 $photo = new user();
-$photo1 = $photo->photoUserPerso();
-$selectThemeUser = $photo->selectThemeUserPerso();
+$photo1 = $photo->photoUser();
 
 if(isset($_POST['deco'])){
 
 $photo->deconnexion($_POST['deco']);
 }
-
-if(isset($_COOKIE["couleurtexte"]) && isset($_COOKIE["couleurfond"]))
-{
-	$couleurTexte =$_COOKIE["couleurtexte"]; 
-	$couleurBackground =$_COOKIE["couleurfond"];
-	
-}else{
-	$couleurTexte="#000"; $couleurBackground="#3b94d9";
-
-}
-
+// test
 ?>
 <!doctype html>
 <html>
@@ -55,7 +44,7 @@ if(isset($_COOKIE["couleurtexte"]) && isset($_COOKIE["couleurfond"]))
 <?php foreach($photo1 as $v) { ?> 
 <td><span><a href="" title="profil"><img src="up/<?php echo $v['type']; ?>" width="33"  height="33" class="avatar" alt="avatar" /></a></span></td>
 <?php } ?>
-<td><?php if(empty($selectThemeUser)) { ?><a class="publie" style="background:<?php echo "#3B94D9"; ?>" href="">Tweeter</a> <?php }else { foreach($selectThemeUser as $v5){ ?>  <a class="publie" style="background:<?php echo $v5['th_color']; ?>" href="">Tweeter</a>  <?php } } ?></td>
+<td><a class="publie" href="">Tweeter</a></td>
 <td><form action="header1.php" method="post"><input class="deco" type="submit" name="deco" value="Deconnexion" /></form></td>
 </tr>
 </table>

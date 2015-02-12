@@ -1,19 +1,23 @@
 <?php
-//ajout du menu
+//liaison BDD
 include("header.php");
-//ajout de la class
 include("model/user.php");
-//appel de méthodes, instanciation
+
+//instanciation d'user
 $follow = new user();
+//appel de méthode pour proposer des membres à suivre
 $data = $follow->getSuggestUser();
+
 if(isset($_POST['continue1'])){
+
 	$follow->startFollowUser();
+
 }
-//ouverture de session
 if(isset($_SESSION['nom'])){ 
+
 	?>
 
-	<div id="follow_interest_body">
+	<body style="background:#e1e8ed">
 
 		<div id="header1" >
 			<div id="corps4">
@@ -28,14 +32,15 @@ if(isset($_SESSION['nom'])){
 
 				<div id="leftstart1">
 
-					<h3 class="suggestions">Des suggestions rien que pour vous.</h3>
-					<p class="suggestions">En se basant sur vos choix, voici quelques suggestions faites pour vous. Nous vous recommandons de toutes les suivre !</p>
+					<h3 class="ahah2">Des suggestions rien que pour vous.</h3>
+					<p class="ahah2">En se basant sur vos choix, voici quelques suggestions faites pour vous. Nous vous recommandons de toutes les suivre !</p>
 
-					<p class="perso"><b>Suggestions personnalisées</b><p>
+					<p class="ahah"><b>Suggestions personnalisées</b></<p>
 
 						<div id="gcontact" >
 							<form action="follow_interest.php" method="post" >
 								<?php foreach($data as $v) { 
+
 									?>
 									<div id="contact">
 
@@ -52,14 +57,11 @@ if(isset($_SESSION['nom'])){
 									<input type="submit" value="Suivez ces comptes et continuez" name="continue1" id="submit6"/>
 								</form>
 							</div>
-						</div>
-					</div></center>
-					<script src ="jquery.js" type ="text/javascript"></script>
-					<script src ="inscription.js" type ="text/javascript"></script>
+						</div></center>
+						<script src = "jquery.js" type = "text/javascript"></script>
+						<script src = "inscription.js" type = "text/javascript"></script>
 
-					<?php 
-				}
-				else 
-					{  //si la connexion à échouée redirection vers l'accueil
-					header("location:index.php"); 
-				}  ?>
+						<?php 
+					}
+						else
+						 {  header("location:index.php"); }  ?>

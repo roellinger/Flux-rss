@@ -1,62 +1,6 @@
+
+
 $(document).ready(function(e){
-
-var banniere = $(".banniere").css("background");
-var confirm = $("#confirmer").css("background");
-var borderConfirm = $("#confirmer").css("border");
-var theme_color = $(".theme_color").css("background");
-
-  $('#theme_color span').click(function(){
-    // je prend l'image de fond de la div et je la mets en fond du <body>
-    $('.banniere').css('background', $(this).css('background'));
-	 $('.theme_color').css('background', $(this).css('background'));
-	  $('.theme_color').css('border', $(this).css('color'));
-	   $('#confirmer').css('background', $(this).css('background'));
-	     $('#top').css('background', $(this).css('background'));
-		  $('#top').css('border', $(this).css('color'));
-	    $('#confirmer').css('border', $(this).css('color'));
-		$(".hidden").val($(this).css("background"));
-		$(".hidden1").val($(this).css("color"));
-		 $('#centerbarre li p').css('color', $(this).css('color'));
-	});
-	
-	$(".theme_color").click(function(){
-	
-	if ($(".spwanColor").css("display") == "none"){
-	$(".spwanColor").css("display","block");
-	}else{
-	$(".spwanColor").css("display","none");
-	}
-	});
-	
-	$("#confirmer").click(function(){
-	
-	$("#banniere").removeAttr("background-color"); 
-	
-	
-	});
-
-	
- $('.editer').click(function(){
- 
- $(".banniere").animate({paddingBottom: +250}, 200);
- $('.editer').css("display","none");
- $(".deletedescription").css("display","none");
-$(".noneform").css("display","block");
-  $(".profilcontenu1").css("display","none");
- });
- 
- $(".noneform p").click(function(){
- 
-	 $(".banniere").animate({paddingBottom: -250}, 200);
- $('.editer').css("display","block");
-$(".noneform").css("display","none");
- $(".deletedescription").css("display","block");
-   $(".profilcontenu1").css("display","block");
- $(".banniere").css("background", banniere);
-  $("#confirmer").css("background", confirm);
-   $(".theme_color").css("background", theme_color);
-
- });
 
     $(function() {
         $(document).scroll(
@@ -126,7 +70,7 @@ $('.count').css("display","none");
  var a = 140;
  
     var nombreCaractere = $(this).val().length;
-	var compt = a - nombreCaractere;
+	var compt = eval(a - nombreCaractere);
     var msg = ' ' +  compt;
     $('.count').text(msg);
 	
@@ -149,28 +93,6 @@ $('.count').css("display","none");
 	}
 
  })
- 
- $('#centerbarre li').hover(function(){
- 
-	$("#centerbarre li p").addClass("hover");
- 
- });
- 
-
- 
-	 $(".abo").hover(function(){
-		$(this).removeClass("abo");
-			$(this).addClass("hoverred");
-				var text = "Se désabonner";
-				$(this).val(text);
-			},function(){
-			
-  $(this).removeClass("hoverred");
-   $(this).addClass("abo");
-    var text1 = "Abonné";
-	$(this).val(text1);
-   $(this).removeClass("hover");
- });
  
 });
  

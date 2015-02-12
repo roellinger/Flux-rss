@@ -155,7 +155,7 @@ private $_bdd;
 		public function getSuggestUser(){
 		
 	
-				   $receive2 = $this->_db->query("SELECT * FROM user inner join info on user.id_user = info.id_user  where user.id_user !=" . $_COOKIE["userid"] . " group by login ORDER BY RAND()  LIMIT 30");
+				   $receive2 = $this->_db->query("select * from user where id_user !=" . $_COOKIE['userid']);
 				   return $receive2;
 				
 		
@@ -185,6 +185,7 @@ private $_bdd;
 		
 		public function startFollowUser(){
 		
+		
 				if(isset($_POST['checkbox1'])){
 	
 	$tabCheckbox1 = $_POST['checkbox1'];
@@ -201,6 +202,23 @@ private $_bdd;
 	
 				header("location: setup_profil.php");
 	}
+		
+		}
+		
+		public function FollowUser(){
+		
+		
+				if(isset($_POST['checkbox'])){
+	
+				$tabCheckbox1 = $_POST['checkbox'];
+				foreach($tabCheckbox1 as $v1){
+
+					$receive = $this->_db->query("INSERT INTO followers (id_user, id_follower) VALUES('" . $_COOKIE['userid'] . "', '" . $v1. "')");
+			
+				}
+
+				header("location: accueil.php");	
+		}
 		
 		}
 		
@@ -248,10 +266,17 @@ private $_bdd;
 		
         }
 		
-		public function photoUser(){
+		public function photoUserPerso(){
 		
 		
 			$photoUser = $this->_db->query("select * from media inner join user on media.id_media = user.id_user where id_media =" . $_COOKIE['userid']);
+			return $photoUser;
+			
+		}
+		
+		public function photoUser(){
+				
+			$photoUser = $this->_db->query("select * from media inner join user on media.id_media = user.id_user where id_media =" . $_GET['id']);
 			return $photoUser;
 			
 		}
@@ -284,7 +309,7 @@ private $_bdd;
 		}
 		
 		
-		public function countFollow(){
+		public function countFollowPerso(){
 		
 		$countFollow = $this->_db->query("select count('id_user') from followers where id_user =" . $_COOKIE['userid']);
 			return $countFollow;
@@ -292,7 +317,7 @@ private $_bdd;
 		
 		}
 		
-		public function countTweet(){
+		public function countTweetPerso(){
 		
 		$countTweet = $this->_db->query("select count('content') from tweet where id_user =" . $_COOKIE['userid']);
 			return $countTweet;
@@ -300,9 +325,33 @@ private $_bdd;
 		
 		}
 		
-		public function countFollower(){
+		public function countFollowerPerso(){
 		
 		$countFollower = $this->_db->query("select count('id_follower') from followers where id_follower =" . $_COOKIE['userid']);
+			return $countFollower;
+			
+		
+		}
+		
+				public function countFollowUser(){
+		
+		$countFollow = $this->_db->query("select count('id_user') from followers where id_user =" . $_GET['id']);
+			return $countFollow;
+			
+		
+		}
+		
+		public function countTweetUser(){
+		
+		$countTweet = $this->_db->query("select count('content') from tweet where id_user =" . $_GET['id']);
+			return $countTweet;
+			
+		
+		}
+		
+		public function countFollowerUser(){
+		
+		$countFollower = $this->_db->query("select count('id_follower') from followers where id_follower =" . $_GET['id']);
 			return $countFollower;
 			
 		
@@ -318,6 +367,15 @@ private $_bdd;
                                 ':content' => $content
      
                             ));	
+		
+		}
+		
+		public function getTweetPerso(){
+		
+				
+			$getTweetPerso = $this->_db->query("select * from tweet inner join media on tweet.id_user = media.id_media inner join user on tweet.id_user = user.id_user where tweet.id_user =" . $_GET['id']);
+			return $getTweetPerso;
+			
 		
 		}
 	 
