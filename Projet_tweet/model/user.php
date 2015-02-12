@@ -155,7 +155,7 @@ private $_bdd;
 		public function getSuggestUser(){
 		
 	
-				   $receive2 = $this->_db->query("SELECT * FROM user inner join info on user.id_user = info.id_user  where user.id_user !=" . $_COOKIE["userid"] . " group by login ORDER BY RAND()  LIMIT 30");
+				   $receive2 = $this->_db->query("select * from user where id_user !=" . $_COOKIE['userid']);
 				   return $receive2;
 				
 		
@@ -163,8 +163,11 @@ private $_bdd;
 		
 			public function getSuggestUser1(){
 		
-	
-				   $receive2 = $this->_db->query("SELECT * FROM user inner join info on user.id_user = info.id_user  inner join media on user.id_user = media.id_media where user.id_user !=" . $_COOKIE["userid"] . " group by login ORDER BY RAND()  LIMIT 3");
+		
+					$receive3 = $this->_db->query("select id_follower from followers where id_user =" . $_COOKIE['userid']);
+					foreach($receive3 as $v){
+				   $receive2 = $this->_db->query("SELECT * FROM user inner join followers on user.id_user = followers.id_follower inner join info on user.id_user = info.id_user  inner join media on user.id_user = media.id_media where followers.id_follower !=" . $v["id_follower"] . " group by login ORDER BY RAND()  LIMIT 3");
+				   }
 				   return $receive2;
 				
 		
@@ -185,6 +188,7 @@ private $_bdd;
 		
 		public function startFollowUser(){
 		
+		
 				if(isset($_POST['checkbox1'])){
 	
 	$tabCheckbox1 = $_POST['checkbox1'];
@@ -201,6 +205,23 @@ private $_bdd;
 	
 				header("location: setup_profil.php");
 	}
+		
+		}
+		
+		public function FollowUser(){
+		
+		
+				if(isset($_POST['checkbox'])){
+	
+				$tabCheckbox1 = $_POST['checkbox'];
+				foreach($tabCheckbox1 as $v1){
+
+					$receive = $this->_db->query("INSERT INTO followers (id_user, id_follower) VALUES('" . $_COOKIE['userid'] . "', '" . $v1. "')");
+			
+				}
+
+				header("location: accueil.php");	
+		}
 		
 		}
 		
@@ -248,10 +269,46 @@ private $_bdd;
 		
         }
 		
-		public function photoUser(){
+				public function updatePhotoUser($id=""){	
+    
+			$dos = "up/";
+			$ima = $_FILES['avatar']['tmp_name'];
+			$img1 = $_FILES['avatar']['name'];
+			
+			if(!empty($_FILES['avatar']['tmp_name'])) {
+
+				if(!move_uploaded_file($ima, $dos . $img1)) {
+
+					exit("Impossible de copier le fichier dans $dos");
+
+				}
+
+				else {
+					
+						$updatePhotoUser = "update media set type = :img where id_media= :id";
+                            $reussite = $this->_db->prepare($updatePhotoUser);
+                            $reussite->execute(array(
+                                ':img' => $img1,
+								 ':id' => $id
+                            ));
+							header("location: accueil.php");
+				}
+				
+				} 
+		
+			}
+		
+		public function photoUserPerso(){
 		
 		
 			$photoUser = $this->_db->query("select * from media inner join user on media.id_media = user.id_user where id_media =" . $_COOKIE['userid']);
+			return $photoUser;
+			
+		}
+		
+		public function photoUser(){
+				
+			$photoUser = $this->_db->query("select * from media inner join user on media.id_media = user.id_user where id_media =" . $_GET['id']);
 			return $photoUser;
 			
 		}
@@ -274,6 +331,8 @@ private $_bdd;
                                 ':content' => $content
      
                             ));	
+							
+							header("location: accueil.php");
 		}
 		
 		public function getTweet(){
@@ -284,7 +343,7 @@ private $_bdd;
 		}
 		
 		
-		public function countFollow(){
+		public function countFollowPerso(){
 		
 		$countFollow = $this->_db->query("select count('id_user') from followers where id_user =" . $_COOKIE['userid']);
 			return $countFollow;
@@ -292,7 +351,7 @@ private $_bdd;
 		
 		}
 		
-		public function countTweet(){
+		public function countTweetPerso(){
 		
 		$countTweet = $this->_db->query("select count('content') from tweet where id_user =" . $_COOKIE['userid']);
 			return $countTweet;
@@ -300,9 +359,47 @@ private $_bdd;
 		
 		}
 		
-		public function countFollower(){
+		public function countFollowerPerso(){
 		
 		$countFollower = $this->_db->query("select count('id_follower') from followers where id_follower =" . $_COOKIE['userid']);
+			return $countFollower;
+			
+		
+		}
+		
+				public function countFollowUser(){
+		
+		$countFollow = $this->_db->query("select count('id_user') from followers where id_user =" . $_GET['id']);
+			return $countFollow;
+			
+		
+		}
+		
+		public function GetFollowUser(){
+		
+		$GetFollowUser = $this->_db->query("select * from followers inner join user on followers.id_follower = user.id_user inner join media on media.id_media = followers.id_follower where followers.id_user =" . $_GET['id'] . " group by user.id_user");
+			return $GetFollowUser;
+		
+		}
+		
+		public function GetFollowerUser(){
+		
+		$GetFollowUser = $this->_db->query("select followers.id_user, login, fullname, type, biography from followers inner join user on followers.id_user = user.id_user inner join media on media.id_media = followers.id_user where followers.id_follower = " . $_GET['id'] . " group by user.id_user");
+			return $GetFollowUser;
+		
+		}
+		
+		public function countTweetUser(){
+		
+		$countTweet = $this->_db->query("select count('content') from tweet where id_user =" . $_GET['id']);
+			return $countTweet;
+			
+		
+		}
+		
+		public function countFollowerUser(){
+		
+		$countFollower = $this->_db->query("select count('id_follower') from followers where id_follower =" . $_GET['id']);
 			return $countFollower;
 			
 		
@@ -320,11 +417,51 @@ private $_bdd;
                             ));	
 		
 		}
-	 
-	 
+		
+		public function getTweetPerso(){
+		
+				
+			$getTweetPerso = $this->_db->query("select * from tweet inner join media on tweet.id_user = media.id_media inner join user on tweet.id_user = user.id_user where tweet.id_user =" . $_GET['id'] . " order by id_tweet DESC");
+			return $getTweetPerso;
+			
+		
 		}
 		
+		public function ajoutDescriptionUser($fullname="", $biography="", $localisation="", $id=""){
 		
+			$ajoutDescriptionUser = "UPDATE user set biography = :biography, fullname = :fullname, localisation = :localisation where user.id_user = :id ";
+                            $reussite = $this->_db->prepare($ajoutDescriptionUser);
+                            $reussite->execute(array(
+                                ':biography' => $biography,
+								 ':fullname' => $fullname,
+                                ':localisation' => $localisation,
+								 ':id' => $id
+                            ));				
+		
+		}
+	 
+		public function themeColorUser($id="", $color=""){
+	 
+				$ajoutThemeUser = "insert into theme (id_user, th_color) values(:id, :color)";
+                            $reussite = $this->_db->prepare($ajoutThemeUser);
+                            $reussite->execute(array(
+                                ':id' => $id,
+								 ':color' => $color
+                            ));
+		}
+		
+		public function selectThemeUser(){
+		
+			$selectTheme = $this->_db->query("SELECT * FROM theme where theme.id_user =" . $_GET['id'] . " order by id_theme desc limit 1");
+			return $selectTheme->fetchAll();
+		}
+		public function selectThemeUserPerso(){
+		
+			$selectTheme = $this->_db->query("SELECT * FROM theme where theme.id_user =" . $_COOKIE['userid'] . " order by id_theme desc limit 1");
+			return $selectTheme->fetchAll();
+		}
+		
+		}
 		
 		
 

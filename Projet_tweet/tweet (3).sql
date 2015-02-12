@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 10 Février 2015 à 18:13
+-- Généré le :  Jeu 12 Février 2015 à 17:12
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `followers` (
   `id_user` int(11) NOT NULL,
   `id_follower` int(11) NOT NULL,
   PRIMARY KEY (`id_follow`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=197 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=271 ;
 
 --
 -- Contenu de la table `followers`
@@ -158,7 +158,81 @@ INSERT INTO `followers` (`id_follow`, `id_user`, `id_follower`) VALUES
 (193, 27, 24),
 (194, 27, 25),
 (195, 27, 26),
-(196, 3, 27);
+(196, 3, 27),
+(197, 24, 4),
+(198, 29, 3),
+(199, 29, 4),
+(200, 29, 5),
+(201, 29, 6),
+(202, 29, 11),
+(203, 29, 12),
+(204, 29, 13),
+(205, 29, 14),
+(206, 29, 15),
+(207, 29, 16),
+(208, 29, 17),
+(209, 29, 18),
+(210, 29, 19),
+(211, 29, 20),
+(212, 29, 21),
+(213, 29, 22),
+(214, 29, 23),
+(215, 29, 24),
+(216, 29, 25),
+(217, 29, 26),
+(218, 29, 27),
+(219, 29, 28),
+(220, 3, 25),
+(221, 3, 12),
+(222, 3, 24),
+(223, 16, 3),
+(224, 16, 4),
+(225, 16, 5),
+(226, 16, 6),
+(227, 16, 11),
+(228, 16, 12),
+(229, 16, 13),
+(230, 16, 14),
+(231, 16, 15),
+(232, 16, 17),
+(233, 16, 18),
+(234, 16, 19),
+(235, 16, 20),
+(236, 16, 21),
+(237, 16, 22),
+(238, 16, 23),
+(239, 16, 24),
+(240, 16, 25),
+(241, 16, 26),
+(242, 16, 27),
+(243, 16, 28),
+(244, 16, 29),
+(245, 30, 3),
+(246, 30, 4),
+(247, 30, 5),
+(248, 30, 6),
+(249, 30, 11),
+(250, 30, 12),
+(251, 30, 13),
+(252, 30, 14),
+(253, 30, 15),
+(254, 30, 16),
+(255, 30, 17),
+(256, 30, 18),
+(257, 30, 19),
+(258, 30, 20),
+(259, 30, 21),
+(260, 30, 22),
+(261, 30, 23),
+(262, 30, 24),
+(263, 30, 25),
+(264, 30, 26),
+(265, 30, 27),
+(266, 30, 28),
+(267, 30, 29),
+(268, 30, 29),
+(269, 3, 30),
+(270, 24, 26);
 
 -- --------------------------------------------------------
 
@@ -172,6 +246,8 @@ CREATE TABLE IF NOT EXISTS `inbox` (
   `id_to_user` int(11) NOT NULL,
   `content` varchar(140) NOT NULL,
   `date` datetime NOT NULL,
+  `activate_send` int(11) NOT NULL,
+  `activate_receiver` int(11) NOT NULL,
   PRIMARY KEY (`id_msg`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -186,7 +262,7 @@ CREATE TABLE IF NOT EXISTS `info` (
   `id_user` int(11) NOT NULL,
   `activite` varchar(255) NOT NULL,
   PRIMARY KEY (`id_info`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=64 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=67 ;
 
 --
 -- Contenu de la table `info`
@@ -213,7 +289,10 @@ INSERT INTO `info` (`id_info`, `id_user`, `activite`) VALUES
 (60, 24, 'Comptes populaires,Associations et Caritatif'),
 (61, 25, 'Associations et Caritatif,Technologie</'),
 (62, 26, 'Associations et Caritatif,Technologie</'),
-(63, 27, 'Sports,Technologie</,Musique,Politique');
+(63, 27, 'Sports,Technologie</,Musique,Politique'),
+(64, 29, 'Technologie</'),
+(65, 16, 'Technologie</,Art, Mode et Design'),
+(66, 30, 'Associations et Caritatif');
 
 -- --------------------------------------------------------
 
@@ -233,10 +312,11 @@ CREATE TABLE IF NOT EXISTS `media` (
 --
 
 INSERT INTO `media` (`id_media`, `type`, `url`) VALUES
-(3, '10806359_1519696451631540_6363427416848253273_n.jpg', ''),
+(3, 'pika.png', ''),
 (4, '10806359_1519696451631540_6363427416848253273_n.jpg', ''),
 (5, '10806359_1519696451631540_6363427416848253273_n.jpg', ''),
 (12, '10806359_1519696451631540_6363427416848253273_n.jpg', ''),
+(16, '250px-Carapuce-RFVF.png', ''),
 (19, '10461973_10203850264834131_5915673100345997692_n.jpg', ''),
 (20, 'Magenta.jpg', ''),
 (21, 'noavatar.gif', ''),
@@ -244,7 +324,9 @@ INSERT INTO `media` (`id_media`, `type`, `url`) VALUES
 (24, 'pika.png', ''),
 (25, 'pika.png', ''),
 (26, 'noavatar.gif', ''),
-(27, 'pika.png', '');
+(27, 'pika.png', ''),
+(29, 'pika.png', ''),
+(30, '250px-Carapuce-RFVF.png', '');
 
 -- --------------------------------------------------------
 
@@ -287,7 +369,24 @@ CREATE TABLE IF NOT EXISTS `theme` (
   `th_main_theme` varchar(255) NOT NULL,
   `th_pos` varchar(255) NOT NULL,
   PRIMARY KEY (`id_theme`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+
+--
+-- Contenu de la table `theme`
+--
+
+INSERT INTO `theme` (`id_theme`, `id_user`, `th_color`, `th_main_theme`, `th_pos`) VALUES
+(1, 24, 'rgb(221, 46, 68) none repeat scroll 0% 0% / auto padding-box border-box', '', ''),
+(2, 24, 'rgb(137, 201, 250) none repeat scroll 0% 0% / auto padding-box border-box', '', ''),
+(3, 24, 'rgb(146, 102, 204) none repeat scroll 0% 0% / auto padding-box border-box', '', ''),
+(4, 24, 'rgb(221, 46, 68) none repeat scroll 0% 0% / auto padding-box border-box', '', ''),
+(5, 24, 'rgb(146, 102, 204) none repeat scroll 0% 0% / auto padding-box border-box', '', ''),
+(6, 24, 'rgb(137, 201, 250) none repeat scroll 0% 0% / auto padding-box border-box', '', ''),
+(7, 3, 'rgb(250, 116, 62) none repeat scroll 0% 0% / auto padding-box border-box', '', ''),
+(8, 3, 'rgb(137, 201, 250) none repeat scroll 0% 0% / auto padding-box border-box', '', ''),
+(9, 3, 'rgb(221, 46, 68) none repeat scroll 0% 0% / auto padding-box border-box', '', ''),
+(10, 3, 'rgb(148, 212, 135) none repeat scroll 0% 0% / auto padding-box border-box', '', ''),
+(11, 24, 'rgb(221, 46, 68) none repeat scroll 0% 0% / auto padding-box border-box', '', '');
 
 -- --------------------------------------------------------
 
@@ -305,7 +404,7 @@ CREATE TABLE IF NOT EXISTS `tweet` (
   `hashtag` varchar(140) NOT NULL,
   `activate` int(11) NOT NULL,
   PRIMARY KEY (`id_tweet`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
 
 --
 -- Contenu de la table `tweet`
@@ -335,7 +434,25 @@ INSERT INTO `tweet` (`id_tweet`, `id_user`, `id_media`, `created`, `content`, `i
 (22, 24, 0, '2015-02-09', 'Pikaa Pikaaa !!', 0, '', 0),
 (23, 3, 0, '2015-02-10', 'hello', 0, '', 0),
 (24, 3, 0, '2015-02-10', 'bonjour les amis !\r\n', 0, '', 0),
-(25, 27, 0, '2015-02-10', 'Pikaaa gus !!', 0, '', 0);
+(25, 27, 0, '2015-02-10', 'Pikaaa gus !!', 0, '', 0),
+(26, 29, 0, '2015-02-10', 'hello je suis une pute', 0, '', 0),
+(27, 3, 0, '2015-02-10', 'hello ! ', 0, '', 0),
+(28, 30, 0, '2015-02-11', 'coucou', 0, '', 0),
+(29, 24, 0, '2015-02-12', 'bb', 0, '', 0),
+(30, 3, 0, '2015-02-12', ':)\r\n', 0, '', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `url`
+--
+
+CREATE TABLE IF NOT EXISTS `url` (
+  `id_url` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) NOT NULL,
+  `short` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_url`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -357,36 +474,39 @@ CREATE TABLE IF NOT EXISTS `user` (
   `activate` int(11) NOT NULL,
   `privacy` int(11) NOT NULL,
   `key_activation` int(11) NOT NULL,
+  `localisation` varchar(255) NOT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
 
 --
 -- Contenu de la table `user`
 --
 
-INSERT INTO `user` (`id_user`, `biography`, `login`, `password`, `fullname`, `mail`, `f_name`, `l_name`, `date_register`, `follows`, `activate`, `privacy`, `key_activation`) VALUES
-(3, 'caca', 'Robinouzz', 'test', 'Robin', 'roellinger.robin@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0),
-(4, '', 'Oranette', 'test', 'Orane', 'orane@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0),
-(5, '', 'besac', 'test', 'axel', 'Besa@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0),
-(6, '', 'besac1', 'test', 'axel', 'rosellinger.robin@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0),
-(11, '', 'loulou', 'test', 'louis', 'roellingaaaer.robin@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0),
-(12, '', 'Rito', 'test', 'vincent graul', 'vincent@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0),
-(13, '', 'delhomme', 'test', 'theo', 'theo@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0),
-(14, '', 'besac2', 'test', 'axel', 'besac@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0),
-(15, '', 'oranette123', 'test', 'orane ', 'oran1e@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0),
-(16, '', 'Max', 'test', 'max', 'max@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0),
-(17, '', 'max1', 'test', 'maxence', 'maxence@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0),
-(18, '', 'sucrÃ©', 'test', 'julie planque', 'julie@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0),
-(19, '', 'pangolin', 'test', 'pango', 'pangolin@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0),
-(20, '', 'toto', 'test', 'naruto', 'naruto@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0),
-(21, '', 'robisco', 'test', 'Robin ROellinger', 'roellinger.robin1@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0),
-(22, '', 'besac3', 'test', 'lolilol', 'roellinger.rssobin@gmail.com2', '', '', '0000-00-00 00:00:00', '', 1, 0, 0),
-(23, '', 'tataÂ²', 'test', 'toto', 'roellinger.rzzobin@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0),
-(24, '', 'pika', 'test', 'Pikachu', 'pikachu@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0),
-(25, '', 'anais', 'test', 'anais karaman', 'anais@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0),
-(26, '', 'caca', 'gfhj', 'k,vhbnk,', 'ss@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0),
-(27, '', 'Gus', 'test', 'Gustave pango', 'gus@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0),
-(28, '', 'gus', 'test', 'gus', 'guss@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0);
+INSERT INTO `user` (`id_user`, `biography`, `login`, `password`, `fullname`, `mail`, `f_name`, `l_name`, `date_register`, `follows`, `activate`, `privacy`, `key_activation`, `localisation`) VALUES
+(3, 'Bonjour la vie !', 'Robinouzz', 'test', 'Robin Roellingerr', 'roellinger.robin@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, 'Paris'),
+(4, '', 'Oranette', 'test', 'Orane', 'orane@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, ''),
+(5, '', 'besac', 'test', 'axel', 'Besa@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, ''),
+(6, '', 'besac1', 'test', 'axel', 'rosellinger.robin@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0, ''),
+(11, '', 'loulou', 'test', 'louis', 'roellingaaaer.robin@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0, ''),
+(12, '', 'Rito', 'test', 'vincent graul', 'vincent@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, ''),
+(13, '', 'delhomme', 'test', 'theo', 'theo@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0, ''),
+(14, '', 'besac2', 'test', 'axel', 'besac@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0, ''),
+(15, '', 'oranette123', 'test', 'orane ', 'oran1e@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0, ''),
+(16, '', 'Max', 'test', 'max', 'max@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, ''),
+(17, '', 'max1', 'test', 'maxence', 'maxence@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0, ''),
+(18, '', 'sucrÃ©', 'test', 'julie planque', 'julie@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0, ''),
+(19, '', 'pangolin', 'test', 'pango', 'pangolin@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, ''),
+(20, '', 'toto', 'test', 'naruto', 'naruto@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, ''),
+(21, '', 'robisco', 'test', 'Robin ROellinger', 'roellinger.robin1@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, ''),
+(22, '', 'besac3', 'test', 'lolilol', 'roellinger.rssobin@gmail.com2', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, ''),
+(23, '', 'tataÂ²', 'test', 'toto', 'roellinger.rzzobin@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0, ''),
+(24, 'Pika pikaaaa !', 'pika', 'test', 'Pika', 'pikachu@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, 'Kanto'),
+(25, '', 'anais', 'test', 'anais karaman', 'anais@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, ''),
+(26, '', 'caca', 'gfhj', 'k,vhbnk,', 'ss@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, ''),
+(27, '', 'Gus', 'test', 'Gustave pango', 'gus@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, ''),
+(28, '', 'gus', 'test', 'gus', 'guss@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0, ''),
+(29, '', 'axel', 'test', 'axel chollet', 'roellinger.robddin@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, ''),
+(30, '', 'planque', 'test', 'planque', 'pla@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, '');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
