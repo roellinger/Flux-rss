@@ -21,13 +21,59 @@ Class User
 
 	public function inscription($login, $nom, $mail, $mdp)
 	{
-			$login_entities = addslashes(htmlentities($login));
-			$nom_entities = htmlentities($nom);
-			$mail_entities= htmlentities($mail);
-			$mdp_entities = htmlentities($mdp);
-
+		//sécurité 
+		$login_entities = addslashes(htmlentities($login));
+		$nom_entities = addslashes(htmlentities($nom));
+		$mail_entities= addslashes(htmlentities($mail));
+		$mdp_entities = addslashes(htmlentities($mdp));
+		$mdp_entities =	hash("ripemd160", "Si t'es fier d'etre dans la wac tape dans tes mains");
+ 
 		if(isset($_POST['submit1'])){
-			
+
+			if (empty($login_entities&&$mdp_entities&&$mail_entities))
+			{
+				echo "Veuillez remplir tous les champs";
+				return;
+			}
+
+			if (strlen($login_entities) <= 4)
+			{
+				echo "Login trop court ! (4 caractères mini)";
+				return;
+			}
+
+			if (strlen($nom_entities) <= 3)
+			{
+				echo "Nom trop court, n'utilisez pas d'abréviations ! (3 caractères mini)";
+				return;
+			}
+
+			if (!is_string($nom_entities) && !is_string($login_entities)) 
+			{
+				echo "merci d'utiliser des caractères et non des chiffres!";
+				return;
+			}
+
+			if (strlen($login_entities) <= 3)
+			{
+				echo "Login trop court, n'utilisez pas d'abréviations ! (3 caractères mini)";
+				return;
+			}
+
+			if(!filter_var($mail_entities, FILTER_VALIDATE_EMAIL))
+			{
+				echo "email non valide";
+				return;
+			}
+
+			// $interdit = "/^[a-zA-Z0-9 _-]+$";
+			// if (preg_match($login, $interdit) || preg_match($mail, $interdit) || preg_match($mdp, $interdit))
+			// {
+			// 	echo "caractères spéciaux interdits";
+			// 	return;
+			// }
+
+		
 			if($login && $mdp && $nom && $mail){
 
 				$sql1 = "SELECT * from user WHERE mail ='$mail_entities'";
@@ -67,8 +113,9 @@ Class User
 
 	public function connexion($mail = "", $mdp = ""){
 		
-			//$nom_entities = htmlentities($nom);
-			
+		$nom_entities = htmlentities($nom);
+		$mdp_entities =	hash("ripemd160", "Si t'es fier d'etre dans la wac tape dans tes mains");
+
 		if (isset($_POST['submit'])) {
 
 			if ($mail && $mdp) {
@@ -87,14 +134,12 @@ Class User
 				}
 				else
 				{
-
 					header("location: co.php");
 				}
 
 			}
 			else
 			{
-
 				header("location: co.php");
 
 			} } } 
