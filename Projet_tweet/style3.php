@@ -1,12 +1,12 @@
 
 <style>
 
-#centerbarre li p{
+	#centerbarre li p{
 
-margin:0;
-color:<?php echo $couleurBackground; ?>;
+		margin:0;
+		color:<?php echo $couleurBackground; ?>;
 
-}
+	}
 
 
 
