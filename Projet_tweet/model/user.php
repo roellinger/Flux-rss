@@ -531,7 +531,68 @@ Class User
 				
 			}
 			
+			public function add_arobase($str)
+			{
+				
+				$tab = explode(" ", $str);
+				foreach ($tab as $key => $value_tab) 
+				{
+
+					if($value_tab[0] === "@")
+					{
+						$search = "@";
+						$replace = "";
+						$subject = $tab;
+
+						$not_arobase = str_replace($search, $replace, $subject); 
+						$str_arobase = implode($not_arobase);
+
+						$arobase = "SELECT id_user FROM user WHERE login = :login";
+						$reussite = $this->_db->prepare($arobase);
+						$reussite->execute(array(
+						':login' => $str_arobase,
+						));
+						$reussite->fetchAll();
+						$rows  = $reussite->rowCount();
+						
+						if($rows > 0)
+						{
+							var_dump($rows);
+							foreach ($reussite as $value) 
+							{
+								$lien = "<a href=profil.php?id=".$value['id_user'] . "> ".$str_arobase . "</a>";
+								return $lien;
+							}
+
+							
+						}
 			
+					}
+					else
+					{
+						echo "pas d'arobase";
+					}
+					
+				}
+				
+
+
+				// $pattern = "[^@]";	
+				
+
+				// if(preg_match($pattern, $str) == true)
+				// {
+
+
+				// }
+				// else
+				// {
+				// 	echo "pas d'arobase";
+				// }
+
+				return $str;
+			}
+
 		}
 		
 		

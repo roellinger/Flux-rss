@@ -30,7 +30,10 @@ if (time()-$_SESSION['derniereaction'] > 3600) {
 
 	if(isset($_POST['tweet'])){
 
-		$accueil->publicationTweet($_COOKIE['userid'], $_POST['publie']);
+	
+		$retour = $accueil->add_arobase($_POST['publie']);
+		$accueil->publicationTweet($_COOKIE['userid'], $retour);
+
 
 	}
 
@@ -39,7 +42,9 @@ if (time()-$_SESSION['derniereaction'] > 3600) {
 		$couleurTexte =$_COOKIE["couleurtexte"]; 
 		$couleurBackground =$_COOKIE["couleurfond"];
 		
-	}else{
+	}
+	else
+	{
 		$couleurTexte="#000"; $couleurBackground="#3b94d9";
 
 	}
