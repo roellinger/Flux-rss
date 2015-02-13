@@ -47,9 +47,9 @@ if(isset($_COOKIE["couleurtexte"]) && isset($_COOKIE["couleurfond"]))
 					<td><span class="accueil"><a class="surligne" href="message.php" title="Messages">Messages</a></span></td>
 					<td><span><a href="accueil.php" title="icone"><img class="icone" src="images/icone.png" alt="touitteur" width="40" height="40"/></a></span></td>
 					<td><span>
-						<form action="header1.php" method="post" >
+						<form action="search.php" method="post" >
 							<input type="search" name="search" id="submit" placeholder="Recherchez sur Twitter"/>
-							<button type="submit" ><img src="images/search1.png" width="25" height="25"/></button>	
+							<button type="submit" name="submit"><img src="images/search1.png" width="25" height="25"/></button>	
 						</form>
 					</span></td>
 					<?php foreach($photo1 as $v) { ?> 
