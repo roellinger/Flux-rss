@@ -4,6 +4,8 @@ var banniere = $(".banniere").css("background");
 var confirm = $("#confirmer").css("background");
 var borderConfirm = $("#confirmer").css("border");
 var theme_color = $(".theme_color").css("background");
+var centerbarre = $("#centerbarre li p").css("color");
+
 
   $('#theme_color span').click(function(){
     // je prend l'image de fond de la div et je la mets en fond du <body>
@@ -55,7 +57,7 @@ $(".noneform").css("display","none");
  $(".banniere").css("background", banniere);
   $("#confirmer").css("background", confirm);
    $(".theme_color").css("background", theme_color);
-
+	 $("#centerbarre li p").css("color", centerbarre);
  });
 
     $(function() {

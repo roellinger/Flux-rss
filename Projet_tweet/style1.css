@@ -113,6 +113,14 @@ font-size:12px;
 #centerbarre li p:last-child{
 color:#3B94D9;
 }
+.droit{
+
+margin:0;
+margin-top:15px;
+margin-left:6px;
+color:#8899a6 !important;
+font-size:12px;
+}
 .hover{
 
 
@@ -121,6 +129,11 @@ color:#3B94D9;
 
 margin:0;
 
+}
+
+#centerbarre li p:hover{
+
+color:#3B94D9;
 }
 #centerbarre{
 
@@ -214,6 +227,10 @@ line-height:20px;
 
 margin:0;
 text-align:left;
+}
+.description_abo{
+
+
 }
 .banniere{
 
@@ -403,13 +420,14 @@ margin:0;
 margin-left:15px;
 font-size:14px;
 color:#66757f;
+
 }
+
 .topabo{
 
 min-height:90px;
 border-top-left-radius:10px;
 border-top-right-radius:10px;
-background:#0084B4 !important;
 }
 .abonnees img{
 
@@ -444,6 +462,10 @@ margin-left:15px;
 padding-bottom:20px;
 border:1px solid #e1e8ed;
 border-radius:5px;
+}
+.description_abo{
+
+
 }
 .nameUser{
 

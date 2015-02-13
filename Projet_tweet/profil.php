@@ -6,7 +6,9 @@ $photo = new user();
 if(isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])){
 $photo1 = $photo->photoUser();
 }
+
 $accueil2 = $photo->getSuggestUser1();
+
 $getTweetPerso = $photo-> getTweetPerso();
 $photo2 = $photo->photoUserPerso();
 $selectThemeUser = $photo->selectThemeUser();
@@ -29,7 +31,7 @@ $profil->updatePhotoUser($_COOKIE['userid']);
 $profil->ajoutDescriptionUser($_POST['fullname'], $_POST['bio'], $_POST['localisation'], $_COOKIE['userid']);
 header("location: accueil.php");
 
-$profil->themeColorUser($_COOKIE['userid'], $_POST['hidden']);
+$profil->themeColorUser($_POST['hidden']);
 
 }
 
@@ -81,15 +83,15 @@ else
 <?php if(!empty($_GET['id']) && is_numeric($_GET['id'])) {  foreach($photo2 as $v) { ?> 
 <td><span><a href="" title="profil"><img src="up/<?php echo $v['type']; ?>" width="33"  height="33" class="avatar" alt="avatar" /></a></span></td>
 <?php } ?>
-<td><?php if(empty($selectThemeUser)) { ?><a class="publie" style="background:<?php echo "#3B94D9"; ?>" href="">Tweeter</a> <?php }else { foreach($selectThemeUser as $v5){ ?>  <a class="publie" style="background:<?php echo $v5['th_color']; ?>" href="">Tweeter</a>  <?php } } ?></td>
-<td><form action="profil.php" method="post"><input class="deco" type="submit" name="deco" value="Deconnexion" /></form></td>
+<td><?php if(empty($selectThemeUser)) { ?><a class="publie" style="background:<?php echo "#3B94D9"; ?>" href="">Tweeter</a> <?php }else { foreach($selectThemeUser as $v5){ ?>  <a class="publie" style="background:<?php echo $v5['id_theme']; ?>" href="">Tweeter</a>  <?php } } ?></td>
+<td><form action="profil.php?id=<?php echo $_GET['id'];?>" method="post"><input class="deco" type="submit" name="deco" value="Deconnexion" /></form></td>
 </tr>
 </table>
 </div>
 </div>
 <?php if(empty($selectThemeUser)) { ?>
 
-<div style="background:<?php echo "#3B94D9"; ?>" class="banniere"></div> <?php }else { foreach($selectThemeUser as $v5){ ?> <div style="background:<?php echo $v5['th_color']; ?>" class="banniere">  <?php } }  ?>
+<div style="background:<?php echo "#3B94D9"; ?>" class="banniere"></div> <?php }else { foreach($selectThemeUser as $v5){ ?> <div style="background:<?php echo $v5['id_theme']; ?>" class="banniere">  <?php } }  ?>
 
 
 </div>
@@ -100,17 +102,17 @@ else
 <?php foreach($photo1 as $v) { ?>
 <img src="up/<?php echo $v['type']; ?>" width="200" height="200" alt="photo_profil"> 
 <ul>
-	<?php foreach($countTweet as $v1) { ?><a href="profil.php?id=<?php echo $v['id_user']; ?>"><li><p style="color:<?php echo $couleurBackground; ?>";>TWEETS</p><p><?php echo $v1[0]; ?></p></li></a><?php } ?>
-	<?php foreach($countFollow as $v2) { ?><a href="following.php?id=<?php echo $v['id_media']; ?>"><li><p>ABONNEMENTS</p><p><?php echo $v2[0]; ?></p></li></a> <?php } ?>
+	<?php foreach($countTweet as $v1) { ?><a href="profil.php?id=<?php echo $v['id_user']; ?>"><li style="border-bottom:4px solid #0084B4"><p style="color:<?php echo $couleurBackground; ?>";>TWEETS</p><p><?php echo $v1[0]; ?></p></li></a><?php } ?>
+	<?php foreach($countFollow as $v2) { ?><a href="following.php?id=<?php echo $v['id_media']; ?>"><li><p >ABONNEMENTS</p><p><?php echo $v2[0]; ?></p></li></a> <?php } ?>
 	<?php foreach($countFollower as $v3) { ?><a href="followers.php?id=<?php echo $v['id_media']; ?>"><li><p>ABONNES</p><p><?php echo $v3[0]; ?></p></li></a> <?php } ?>
 	<a href=""><li><p>FAVORIS</p><p>0</p></li></a>
-	<?php if($v['id_media'] == $_COOKIE['userid']) { ?>
+	
 	<li>
 			<p style="margin-right:-450px" id="six">
-			<input type="submit" name="editer" class="editer" value="Editer le profil"/>
+			<?php if($v['id_media'] == $_COOKIE['userid']) { ?><input type="submit" name="editer" class="editer" value="Editer le profil"/> <?php }else{ ?> <form class="suivreUser" action="profil.php?id=<?php echo $_GET['id']; ?>" method="post"> <input style="margin-right:-400px" type="submit" name="suivreUser" class="editer" value="Suivre"/> </form><?php } ?>
 			</p>
 		
-	</li> <?php } ?>
+	</li>
 </ul>
 </div>
 </div>
@@ -123,15 +125,17 @@ else
 		<input type="texte" name="fullname" value="<?php echo $v['fullname']; ?>" maxlength="20" placeholder="Nom complet"/>
 		<input type="texte" name="bio" placeholder="Biographie(200car max)" maxlength="200" value="<?php echo $v['biography']; ?>"/>
 		<input type="texte" name="localisation" placeholder="Localisation (30car max)" maxlength="30" value="<?php echo $v['localisation']; ?>"/>
-		<input type="button" style="background:<?php echo $couleurBackground; ?>;" class="theme_color" value="Couleur du theme" name="theme_color" /><br>
+		<?php if(empty($selectThemeUser)) { ?>
+		<input type="button" style="background:<?php echo "#3B94D9"; ?>;" class="theme_color" value="Couleur du theme" name="theme_color" /><?php }else { foreach($selectThemeUser as $v5) { ?>  <input type="button" style="background:<?php echo $v5['id_theme']; ?>;" class="theme_color" value="Couleur du theme" name="theme_color" />  <?php } } ?><br>
 		<div class="spwanColor"><span class="choose_color"></span><span class="choose_color1"></span><span class="choose_color2"></span><span class="choose_color3"></span><span class="choose_color4"></span></div><br>
-		<input type="hidden" class="hidden" value="" name="hidden"/>
+		<input type="hidden" class="hidden" value="<?php if(!empty($selectThemeUser)) { echo $v['id_theme']; }?>" name="hidden"/>
 			<input type="hidden" class="hidden" value="" name="hidden1"/>
-		<input type="submit" id="confirmer" style="background:<?php echo $couleurBackground; ?>; border:<?php echo $couleurTexte; ?>;" name="confirmer1" />
+			<?php if(empty($selectThemeUser)) { ?>
+		<input type="submit" id="confirmer" style="background:<?php echo "#3B94D9"; ?>; border:<?php echo $couleurTexte; ?>;" name="confirmer1" /> <?php }else { foreach($selectThemeUser as $v5){ ?> <input type="submit" id="confirmer" style="background:<?php echo $v5['id_theme']; ?>; border:<?php echo $couleurTexte; ?>;" name="confirmer1" />  <?php }}  ?>
 		<p>Annuler</p>
 	</form>
 	</div>
-<p class="deletedescription" ><a href="profil.php?id=<?php echo $v['id_user']; ?>"><?php echo $v['fullname']; ?></a></p>
+<p class="deletedescription" ><b><a href="profil.php?id=<?php echo $v['id_user']; ?>"><?php echo $v['fullname']; ?></a></b></p>
 <p class="deletedescription" ><a href="" class="gris"><?php echo "@" . $v['login']; ?></a></p>
 <p class="deletedescription"><?php echo $v['biography']; ?></p>
 <p class="deletedescription"><?php echo $v['localisation']; ?></p>
@@ -152,14 +156,14 @@ else
 <div class="profilcontenu">
 <h5>Suggestions</h5>
 <form action="accueil.php" method="post" >
-<?php foreach($accueil2 as $v2) { ?>
 <div class="suggest">
-<p class="align"><img class="lol4" src="up/<?php echo $v2['type']; ?>" class="avatar2" width="49"  height="49"  alt="avatar" /></p><p class="haut"><a href="profil.php?id=<?php echo $v2['id_user']; ?>"><?php echo $v2['login']; ?></a><span class="petit"> @<?php echo  $v2['login'] ?></span></p>
+<?php if(!empty($accueil2)) { foreach($accueil2 as $v2) { ?><p class="align"><img class="lol4" src="up/<?php echo $v2['type']; ?>" class="avatar2" width="49"  height="49"  alt="avatar" /></p><p class="haut"><a href="profil.php?id=<?php echo $v2['id_user']; ?>"><?php echo $v2['login']; ?></a><span class="petit"> @<?php echo  $v2['login'] ?></span></p>
 <input type="checkbox" name="checkbox[]" id="submit2" value="<?php echo $v2['id_user']; ?>" />
 
-<?php } ?>
+<?php } }else { ?> <p class="align">Aucun utilisateur suggerer</p> <?php } ?>
+
 <?php if(empty($selectThemeUser)) { ?>
-<input type="submit" name="suivre" style="background:<?php echo "#3B94D9"; ?>" value="suivre" id="suivre"><?php }else{ foreach($selectThemeUser as $v5) { ?> <input type="submit" name="suivre" style="background:<?php echo $v5['th_color']; ?>" value="suivre" id="suivre"> <?php } } ?>
+<input type="submit" name="suivre" style="background:<?php echo "#3B94D9"; ?>" value="suivre" id="suivre"><?php }else{ foreach($selectThemeUser as $v5) { ?> <input type="submit" name="suivre" style="background:<?php echo $v5['id_theme']; ?>" value="suivre" id="suivre"> <?php } } ?>
 </form>
 </div>
 </div>

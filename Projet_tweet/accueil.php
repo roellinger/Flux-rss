@@ -12,7 +12,9 @@ $accueil = new user();
 
 $accueil1 = $accueil->activate();
 $photo1 = $accueil->photoUserPerso();
+
 $accueil2 = $accueil->getSuggestUser1();
+
 $getTweet = $accueil->getTweet();
 
 $countFollow =$accueil->countFollowPerso();
@@ -56,9 +58,7 @@ if($v['activate'] == 1) {
 <div class="publication">
 
 <?php if(empty($selectThemeUser)) { ?>
-
-<div style="background:<?php echo "#3B94D9"; ?>" id="top"></div> <?php }else { foreach($selectThemeUser as $v5){ ?> <div style="background:<?php echo $v5['th_color']; ?>" id="top">  <?php } }  ?>
-
+<div style="background:<?php echo "#3B94D9"; ?>"  id="top"> <?php }else { foreach($selectThemeUser as $v5) { ?> <div style="background:<?php echo $v5['id_theme']; ?>"  id="top">  <?php } } ?>
 
 </div>
 
@@ -108,18 +108,20 @@ $cont = substr($v3['content'], 0, 45) . "...";
 
 <h5>Suggestions</h5>
 <form action="accueil.php" method="post" >
-<?php foreach($accueil2 as $v2) { ?>
+
 <div class="suggest">
-<p class="align"><img class="lol4" src="up/<?php echo $v2['type']; ?>" class="avatar2" width="49"  height="49"  alt="avatar" /></p><p class="haut"><a href="profil.php?id=<?php echo $v2['id_user']; ?>"><?php echo $v2['login']; ?></a><span class="petit"> @<?php echo  $v2['login'] ?></span></p>
+<?php if(!empty($accueil2)) {  foreach($accueil2 as $v2) { ?> <p class="align"><img class="lol4" src="up/<?php echo $v2['type']; ?>" class="avatar2" width="49"  height="49"  alt="avatar" /></p><p class="haut"><a href="profil.php?id=<?php echo $v2['id_user']; ?>"><?php echo $v2['login']; ?></a><span class="petit"> @<?php echo  $v2['login'] ?></span></p>
 <input type="checkbox" name="checkbox[]" id="submit2" value="<?php echo $v2['id_user']; ?>" />
 
-<?php } ?>
+<?php } }else { ?> <p class="align">Aucun utilisateur suggerer</p>
+<?php  }  ?>
 
 <?php if(empty($selectThemeUser)) { ?>
-<input type="submit" name="suivre" style="background:<?php echo "#3B94D9"; ?>" value="suivre" id="suivre"><?php }else{ foreach($selectThemeUser as $v5) { ?> <input type="submit" name="suivre" style="background:<?php echo $v5['th_color']; ?>" value="suivre" id="suivre"> <?php } } ?>
+<input type="submit" name="suivre" style="background:<?php  echo "#3B94D9"; ?>"  value="suivre" id="suivre"><?php }else { foreach($selectThemeUser as $v5){ ?> <input type="submit" name="suivre" style="background:<?php echo $v5['id_theme']; ?>"  value="suivre" id="suivre"> <?php } } ?>
 </form>
 </div>
 <div class="bottom">
+<p class="droit">© 2015 Twitter À propos Aide Conditions Confidentialité Cookies</p>
 </div>
 </div>
 </div>

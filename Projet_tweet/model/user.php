@@ -21,8 +21,57 @@ private $_bdd;
 
 		public function inscription($login, $nom, $mail, $mdp)
 		{
+		
+		$login_entities = addslashes(htmlentities($login));
+		$nom_entities = addslashes(htmlentities($nom));
+		$mail_entities= addslashes(htmlentities($mail));
+		$mdp_entities = addslashes(htmlentities($mdp));
+		$mdp_entities =	hash("ripemd160", "Si t'es fier d'etre dans la wac tape dans tes mains");
 
 			if(isset($_POST['submit1'])){
+			
+				if (empty($login_entities&&$mdp_entities&&$mail_entities))
+			{
+				echo "Veuillez remplir tous les champs";
+				return;
+			}
+
+			if (strlen($login_entities) <= 4)
+			{
+				echo "Login trop court ! (4 caractères mini)";
+				return;
+			}
+
+			if (strlen($nom_entities) <= 3)
+			{
+				echo "Nom trop court, n'utilisez pas d'abréviations ! (3 caractères mini)";
+				return;
+			}
+
+			if (!is_string($nom_entities) && !is_string($login_entities)) 
+			{
+				echo "merci d'utiliser des caractères et non des chiffres!";
+				return;
+			}
+
+			if (strlen($login_entities) <= 3)
+			{
+				echo "Login trop court, n'utilisez pas d'abréviations ! (3 caractères mini)";
+				return;
+			}
+
+			if(!filter_var($mail_entities, FILTER_VALIDATE_EMAIL))
+			{
+				echo "email non valide";
+				return;
+			}
+
+			// $interdit = "/^[a-zA-Z0-9 _-]+$";
+			// if (preg_match($login, $interdit) || preg_match($mail, $interdit) || preg_match($mdp, $interdit))
+			// {
+			// 	echo "caractères spéciaux interdits";
+			// 	return;
+			// }
 			
 				if($login && $mdp && $nom && $mail){
 				
@@ -63,6 +112,9 @@ private $_bdd;
 		}
 
 		public function connexion($mail = "", $mdp = ""){
+		
+		$nom_entities = htmlentities($nom);
+		$mdp_entities =	hash("ripemd160", "Si t'es fier d'etre dans la wac tape dans tes mains");
 		
 		 if (isset($_POST['submit'])) {
             
@@ -165,12 +217,14 @@ private $_bdd;
 		
 		
 					$receive3 = $this->_db->query("select id_follower from followers where id_user =" . $_COOKIE['userid']);
-					foreach($receive3 as $v){
-				   $receive2 = $this->_db->query("SELECT * FROM user inner join followers on user.id_user = followers.id_follower inner join info on user.id_user = info.id_user  inner join media on user.id_user = media.id_media where followers.id_follower !=" . $v["id_follower"] . " group by login ORDER BY RAND()  LIMIT 3");
-				   }
+					$receive3->fetchAll();
+					if(!empty($receive3)){
+					
+				   $receive2 = $this->_db->query("SELECT * FROM user inner join followers on user.id_user = followers.id_user inner join info on user.id_user = info.id_user  inner join media on user.id_user = media.id_media where user.id_user != " . $_COOKIE['userid'] . " group by login ORDER BY RAND()  LIMIT 3");
+				   
 				   return $receive2;
-				
-		
+			
+					}
 		}
 		
 		public function deconnexion($deco=""){
@@ -384,7 +438,7 @@ private $_bdd;
 		
 		public function GetFollowerUser(){
 		
-		$GetFollowUser = $this->_db->query("select followers.id_user, login, fullname, type, biography from followers inner join user on followers.id_user = user.id_user inner join media on media.id_media = followers.id_user where followers.id_follower = " . $_GET['id'] . " group by user.id_user");
+		$GetFollowUser = $this->_db->query("select followers.id_user, login, fullname, type, biography, id_theme from followers inner join user on followers.id_user = user.id_user inner join media on media.id_media = followers.id_user where followers.id_follower = " . $_GET['id'] . " group by user.id_user");
 			return $GetFollowUser;
 		
 		}
@@ -440,26 +494,39 @@ private $_bdd;
 		
 		}
 	 
-		public function themeColorUser($id="", $color=""){
+		public function themeColorUser($color=""){
 	 
-				$ajoutThemeUser = "insert into theme (id_user, th_color) values(:id, :color)";
+				$ajoutThemeUser = "update user set id_theme = :color where id_user =" . $_COOKIE['userid'];
                             $reussite = $this->_db->prepare($ajoutThemeUser);
                             $reussite->execute(array(
-                                ':id' => $id,
 								 ':color' => $color
                             ));
 		}
 		
 		public function selectThemeUser(){
 		
-			$selectTheme = $this->_db->query("SELECT * FROM theme where theme.id_user =" . $_GET['id'] . " order by id_theme desc limit 1");
+			$selectTheme = $this->_db->query("SELECT * FROM user where id_user =" . $_GET['id']);
 			return $selectTheme->fetchAll();
 		}
 		public function selectThemeUserPerso(){
 		
-			$selectTheme = $this->_db->query("SELECT * FROM theme where theme.id_user =" . $_COOKIE['userid'] . " order by id_theme desc limit 1");
+			$selectTheme = $this->_db->query("SELECT id_theme FROM user where id_user =" . $_COOKIE['userid']);
 			return $selectTheme->fetchAll();
 		}
+		
+			public function desabonnement($id="", $id2=""){
+		
+			$desabonnement = "delete FROM followers WHERE id_user = :id and id_follower = :id2";
+                            $reussite = $this->_db->prepare($desabonnement);
+                            $reussite->execute(array(
+                                ':id' => $id,
+								':id2' => $id2
+                            ));
+							$selection = $_GET['id'];
+					header('Location: following.php?id='.$selection);
+		
+		}
+		
 		
 		}
 		
