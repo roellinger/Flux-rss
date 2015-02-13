@@ -30,7 +30,8 @@ if (time()-$_SESSION['derniereaction'] > 3600) {
 
 	if(isset($_POST['tweet'])){
 
-		$accueil->publicationTweet($_COOKIE['userid'], $_POST['publie']);
+		$string = $accueil->convertHashtag($_POST['publie']);
+		$accueil->publicationTweet($_COOKIE['userid'], $string);
 
 	}
 

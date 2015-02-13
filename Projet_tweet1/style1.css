@@ -15,6 +15,15 @@
 	box-shadow: 1px 1px 2px 0px #656565;
 	filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=2);
 }
+.hashtag{
+
+color:#3B94D9;
+
+}
+.hashtag:hover{
+
+text-decoration:underline;
+}
 .un{
 	background:#f5f8fa;
 	font-family:arial, sans-serif;
@@ -202,7 +211,25 @@ html, body{
 	border-radius:6px;
 	font-family:arial, sans-serif;
 }
+.publication1{
+
+	float:left;
+	margin-right:7px;
+	margin-top:60px;
+	border-radius:6px;
+	font-family:arial, sans-serif;
+}
 .publication:nth-child(2){
+
+	width:580px;
+	background:#fff;
+}
+.publication1:nth-child(2){
+
+	width:5allsubmit0px;
+	background:#fff;
+}
+.publication1:last-child{
 
 	width:580px;
 	background:#fff;
@@ -215,6 +242,7 @@ html, body{
 	position:relative;
 	padding-bottom:10px;
 }
+
 #six{
 
 	float:right;
@@ -734,9 +762,37 @@ span{
 	text-decoration:none;
 	color:#5C5D5D;
 }
+.bloc_publication{
+border-radius:5px;
+margin-bottom:40px;
+
+}
+.allsubmit:hover{
+
+background:#e1e8ed;
+}
+.allsubmit{
+
+display:block;
+width:280px;
+min-height:35px;
+background:#fff;
+border:none;
+border-top:1px solid #e1e8ed;
+cursor:pointer;
+font-size:15px;
+color:#66757f;
+text-align:left;
+padding-left:40px;
+}
 body{
 
 	background:url("images/background_accueil.jpg") fixed no-repeat, #c0deed;
+	font-family:arial, sans-serif;
+}
+.deux{
+
+background:url("images/background_accueil.jpg") fixed no-repeat, #c0deed;
 	font-family:arial, sans-serif;
 }
 #header1 td span a:hover {
