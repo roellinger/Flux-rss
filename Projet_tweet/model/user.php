@@ -292,26 +292,6 @@ Class User
 				
 			}
 			
-			public function convertHashtag($string){
-		
-				$htag = "#";
-				$arr = explode(" ",$string);
-				$arrc = count($arr);
-				$i = 0;
-				while($i < $arrc){
-				
-					if(substr($arr[$i], 0, 1) === $htag){
-					
-						$arr[$i] = "<a class=hashtag href='#'>".$arr[$i]."</a>";
-					}
-					
-					$i++;
-					$string = implode(" ", $arr);
-					
-				}
-				return $string;
-			}
-			
 			public function ajoutPhotoUser(){	
 				
 				$dos = "up/";
@@ -548,30 +528,6 @@ Class User
 					));
 				$selection = $_GET['id'];
 				header('Location: following.php?id='.$selection);
-				
-			}
-			
-			public function rechercheFiltre(){
-				
-			if(isset($_POST['fullname'])){
-				$rechercheFiltre = "";
-				$reussite = $this->_db->prepare($rechercheFiltre);
-				$reussite->execute(array(
-					':id' => $id,
-					':id2' => $id2
-				));
-			
-			}
-			}
-			
-			
-			public function getRecherche($post){
-			
-				   $sql1= 'SELECT fullname, biography FROM user inner join media on user.id_user = media.id_media inner join tweet on user.id_user = tweet.id_user WHERE fullname LIKE "' . $post . '%"';
-					$reponse = $this->_db->prepare($sql1);
-					$reponse->execute();
-					$value = $reponse->fetchAll();
-					return $value;
 				
 			}
 			
