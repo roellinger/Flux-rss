@@ -1,5 +1,27 @@
 $(document).ready(function(e){
 
+
+		$('a.poplight').on('click', function() {
+		var popID = $(this).data('rel'); 
+		var popWidth = $(this).data('width');
+
+		$('#' + popID).fadeIn().css({ 'width': popWidth}).prepend('<a href="#" class="close"><img src="images/croix.png" class="btn_close" title="Close Window" alt="Close" /></a>');
+	
+		var popMargTop = ($('#' + popID).height() + 80) / 2;
+		var popMargLeft = ($('#' + popID).width() + 80) / 2;
+		
+		$('#' + popID).css({ 
+			'margin-top' : -popMargTop,
+			'margin-left' : -popMargLeft
+		});
+	
+		$('body').append('<div id="fade"></div>'); 
+		$('#fade').css({'filter' : 'alpha(opacity=80)'}).fadeIn(); 
+		
+		return false;
+	});
+
+
 	var banniere = $(".banniere").css("background");
 	var confirm = $("#confirmer").css("background");
 	var borderConfirm = $("#confirmer").css("border");
@@ -28,6 +50,16 @@ $(document).ready(function(e){
 			$(".spwanColor").css("display","block");
 		}else{
 			$(".spwanColor").css("display","none");
+		}
+	});
+	
+		$(".tweeterUser").click(function(){
+		
+	
+		if ($("#pipi").css("display") == "none"){
+			$("#pipi").fadeIn("slow");
+		}else{
+			$("#pipi").fadeOut("slow");
 		}
 	});
 	
@@ -62,6 +94,7 @@ $(document).ready(function(e){
 		$("#centerbarre li p").css("color", centerbarre);
 	});
 
+	
 	$(function() {
 		$(document).scroll(
 			function() {
@@ -152,6 +185,35 @@ $(document).ready(function(e){
 			$('.publie1').fadeIn("slow");
 		}
 
+	})	
+	
+		$('.tweetUser').keyup(function() {
+		
+		var a = 140;
+		
+		var nombreCaractere = $(this).val().length;
+		var compt = a - nombreCaractere;
+		var msg = ' ' +  compt;
+		$('.count1').text(msg);
+		
+		if(compt < 10){
+			
+			$(".count1").css("color","red");
+		}else{
+			
+			$(".count1").css("color","#8899a6");
+			
+		}
+		
+		if(compt < 0){
+			
+			$('#pushtweet').hide("fast");
+			
+		}else{
+			
+			$('#pushtweet').fadeIn("slow");
+		}
+
 	})
 	
 	$('#centerbarre li').hover(function(){
@@ -160,7 +222,6 @@ $(document).ready(function(e){
 		
 	});
 	
-
 	
 	$(".abo").hover(function(){
 		$(this).removeClass("abo");

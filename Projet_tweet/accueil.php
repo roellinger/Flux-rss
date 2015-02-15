@@ -33,8 +33,6 @@ include_once("header1.php");
 	if(isset($_POST['tweet'])){
 	
 		$string = $accueil->convertHashtag($_POST['publie']);
-
-
 		$string = $accueil->add_arobase($string);
 		$accueil->publicationTweet($_COOKIE['userid'], $string);
 		
@@ -115,9 +113,11 @@ include_once("header1.php");
 								<img src="up/<?php echo $v3['type']; ?>" width="50" height="50" alt="image_profil"/> 
 								<p class="ahaha"><span><a href="profil.php?id=<?php echo $v3['id_media']; ?>"><?php echo $v3['fullname'] . " "; ?></a></span><span><?php echo "@" . $v3['login'] . " " . $v3['created']; ?></span></p>
 								<p><?php echo $cont; ?></p>
-								<form class="sendSearch1" action="accueil.php" method="post" > 
-									<p><button  name="favoris"><img src="images/repondre.png" width="15" height="15" alt="" /></button></p>
-								</form>
+								
+								<span class="sendSearch1" action="accueil.php" method="post"> 
+									<p><a href="commentaires.php?id=<?php echo $v3['id_tweet']; ?>"><button  name="favoris" class="repTweet"><img src="images/repondre.png" width="15" height="15" alt="" /></button></p>
+								</span>	
+							
 								<form class="sendSearch1" action="accueil.php" method="post" > 
 									<p><button  name="retweet"><img src="images/retweet1.png" width="15" height="15" alt="" /></button></p>
 									<input type="hidden" name="retweet_hidden" value="<?php echo $v3['id_media']; ?>"/>

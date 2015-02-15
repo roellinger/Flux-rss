@@ -23,6 +23,7 @@ if(isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])){
 		$photo->followProfilUser($_COOKIE['userid'], $_POST['hidden_follow']);
 		
 	}
+	$getRepTweet = $photo->getRepTweet($_GET['id']);
 	if(isset($_POST['desabo'])){
 
 	$photo->desabonnement($_COOKIE['userid'], $_POST['hidden_desabo']);
@@ -32,7 +33,6 @@ $getTweetPerso = $photo-> getTweetPerso($_GET['id']);
 $photo2 = $photo->photoUserPerso();
 $selectThemeUser = $photo->selectThemeUser();
 $countFavoris = $photo->countFavoris($_GET['id']);
-$verifFollow = $photo->verifFollow($_COOKIE['userid'], $_GET['id']);
 if(isset($_POST['deretweet'])){
 
 $photo->deleteReTweet($_POST['hidden_deretweet'], $_COOKIE['userid']);
@@ -134,6 +134,7 @@ else
 				<li>
 					<p style="margin-right:-450px" id="six">
 						<?php if($v['id_media'] == $_COOKIE['userid']) { ?><input type="submit" name="editer" class="editer" value="Editer le profil"/> <?php }else{ ?> <?php if(empty($verifFollow)) { ?> <form class="suivreUser" action="profil.php?id=<?php echo $_GET['id']; ?>" method="post"> <input style="margin-right:-400px" type="submit" name="suivreUser" class="editer1" value="Suivre"/><input type="hidden" name="hidden_follow" value="<?php echo $v['id_user']; ?>"/> </form><?php }else { ?> <form class="suivreUser4" action="profil.php?id=<?php echo $_GET['id']; ?>" method="post"> <input style="margin-right:-400px" type="submit" name="desabo" class="abo" value="Abonnee"/><input type="hidden" name="hidden_desabo" value="<?php echo $v['id_user']; ?>"/> </form> <?php }  } ?>
+	
 						</p>
 						
 					</li>
@@ -179,9 +180,9 @@ else
 			<div class="profilcontenu">
 				<ul>
 					<li><a href="profil.php?id=<?php echo $v['id_user']; ?>">Tweets</a></li>
-					<li><a href="rep_tweet.php?id=<?php echo $v['id_user']; ?>">Tweets & réponses</a></li>
+					<li><a href="rep_tweet.php?id=<?php echo $_GET['id'];?>">Tweets & réponses</a></li>
 				</ul>
-				<?php foreach($getTweetPerso as $v4) { ?>
+				<?php foreach($getRepTweet as $v4) { ?>
 				<div class="profilTweet" >
 					<img class="phototweet" src="up/<?php echo $v4['type']; ?>" width="27" height="27" alt="image_profil"/> 
 					<p><span><a href="profil.php?id=<?php echo $v4['id_media']; ?>"><?php echo $v4['fullname'] . " "; ?></a></span><span><?php echo "@" . $v4['login'] . " " . $v4['created']; ?></span></p>
