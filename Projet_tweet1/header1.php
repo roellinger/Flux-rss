@@ -1,4 +1,5 @@
 <?php
+
 include("model/user.php");
 
 $photo = new user();
@@ -10,15 +11,6 @@ if(isset($_POST['deco'])){
 	$photo->deconnexion($_POST['deco']);
 }
 
-if(isset($_COOKIE["couleurtexte"]) && isset($_COOKIE["couleurfond"]))
-{
-	$couleurTexte =$_COOKIE["couleurtexte"]; 
-	$couleurBackground =$_COOKIE["couleurfond"];
-	
-}else{
-	$couleurTexte="#000"; $couleurBackground="#3b94d9";
-
-}
 
 ?>
 <!doctype html>
@@ -47,9 +39,9 @@ if(isset($_COOKIE["couleurtexte"]) && isset($_COOKIE["couleurfond"]))
 					<td><span class="accueil"><a class="surligne" href="message.php" title="Messages">Messages</a></span></td>
 					<td><span><a href="accueil.php" title="icone"><img class="icone" src="images/icone.png" alt="touitteur" width="40" height="40"/></a></span></td>
 					<td><span>
-						<form action="header1.php" method="post" >
+						<form class="sendSearch" action="search.php" method="post" >
 							<input type="search" name="search" id="submit" placeholder="Recherchez sur Twitter"/>
-							<button type="submit" ><img src="images/search1.png" width="25" height="25"/></button>	
+							<button type="submit" name="submit"><img src="images/search1.png" width="25" height="25"/></button>	
 						</form>
 					</span></td>
 					<?php foreach($photo1 as $v) { ?> 
