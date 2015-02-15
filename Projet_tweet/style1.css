@@ -15,15 +15,6 @@
 	box-shadow: 1px 1px 2px 0px #656565;
 	filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=2);
 }
-.hashtag{
-
-color:#3B94D9;
-
-}
-.hashtag:hover{
-
-text-decoration:underline;
-}
 .un{
 	background:#f5f8fa;
 	font-family:arial, sans-serif;
@@ -61,47 +52,6 @@ text-decoration:underline;
 	border:5px solid #fff;
 	border-radius:12px;
 }
-#pipi{
-
-background:url("images/background_accueil.jpg") fixed no-repeat, #c0deed;
-width:270px;
-border-radius:6px;
-padding-bottom:40px;
-margin-top:20px;
-
-}
-#topUser{
-
-min-height:35px;
-background:#fff;
-border-bottom: 1px solid #8899a6;
-}
-#pushtweet{
-
-float:right;
-margin-right:15px;
-color: #fff;
-background-color: #55acee;
-background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.05));
-width: 100px;
-border: 1px solid #3b88c3;
-box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
-cursor: pointer;
-min-height: 35px;
-font-size: 16px;
-border-radius: 6px;
-}
-.tweetUser{
-margin-top:10px;
-margin-left:13px;
-width:230px;
-min-height:100px;
-resize: none;
-padding-left: 10px;
-font-size: 16px;
-border: 1px solid #BFE0EC;
-border-radius: 4px;
-}
 #centerbarre li{
 	margin:0;
 	list-style:none;
@@ -115,33 +65,8 @@ border-radius: 4px;
 
 	width:100px;
 }
-.tweeterUser{
 
-color: #fff;
-background-color: #55acee;
-background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.05));
-width:200px;
-border: 1px solid #3b88c3;
-box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
-cursor: pointer;
-min-height:35px;
-font-size:16px;
-border-radius:6px;
-}
 .editer{
-
-	padding:8px;
-	padding-left:15px;
-	padding-right:15px;
-	border-radius:6px;
-	border:1px solid #e1e8ed;
-	background:#f5f8fa;
-	font-family:roboto, sans-serif;
-	font-weight:bold;
-	color:#66757f;
-	cursor:pointer;
-}
-.editer1{
 
 	padding:8px;
 	padding-left:15px;
@@ -234,21 +159,6 @@ border-radius:6px;
 	border-radius:4px;
 	margin-top:3px;
 }
-
-#resultatRecherche{
-
-text-align:center;
-color:#66757f;
-}
-#searchl{
-
-font-size:13px;
-color:#8899a6;
-}
-#fulls{
-
-text-decoration:underline;
-}
 #top1 form{
 
 	margin:0;
@@ -291,41 +201,8 @@ html, body{
 	margin-top:60px;
 	border-radius:6px;
 	font-family:arial, sans-serif;
-	
-}
-.publication1{
-
-	float:left;
-	margin-right:7px;
-	margin-top:60px;
-	border-radius:6px;
-	font-family:arial, sans-serif;
-	background:#fff;
-	padding-right:15px;
-	padding-bottom:15px;
-}
-.publication1 p{
-
-margin:0;
-margin-top:10px;
-margin-left:10px;
-color:#66757f;
-}
-.publication1 input{
-cursor:pointer;
-margin-left:10px;
 }
 .publication:nth-child(2){
-
-	width:580px;
-	background:#fff;
-}
-.publication1:nth-child(2){
-
-	width:5allsubmit0px;
-	background:#fff;
-}
-.publication1:last-child{
 
 	width:580px;
 	background:#fff;
@@ -338,45 +215,12 @@ margin-left:10px;
 	position:relative;
 	padding-bottom:10px;
 }
-#color_red{
-
-color:red;
-}
 #six{
 
 	float:right;
 }
-.sendSearch1 button{
 
-background:#fff;
-border:none;
-padding:0;
-margin:0;
-cursor:pointer;
-}
-#caca{
-
-margin-left:50px;
-
-}
-.sendSearch1{
-
-display:inline-block;
-margin:0;
-margin-right:30px;
-}
-#noneorigin{
-
-margin-left:15px;
-font-size:12px;
-color:#8899a6;
-
-}
-.contentfav{
-
-margin-left:50px;
-}
-.sendSearch button{
+button{
 	line-height:20px;
 }
 .publication ul {
@@ -406,7 +250,6 @@ margin-left:50px;
 	margin:0;
 	margin-right:-800px;
 }
-
 #centerbarre input{
 
 	margin:0;
@@ -538,7 +381,6 @@ table{
 	width:200px;
 
 }
-
 .profilcontenu li {
 
 	list-style:none;
@@ -655,7 +497,7 @@ table{
 }
 .profilTweet p:last-child{
 
-	margin-left:50px;
+	margin-left:15px;
 	margin-right:15px;
 }
 .gris{
@@ -843,7 +685,11 @@ h2{
 span{
 	word-wrap: break-word;
 }
+#contenu:hover{
 
+	background:#F2F4F8;
+	margin:0;
+}
 
 #contenu img{
 	margin-left:12px;
@@ -868,7 +714,7 @@ span{
 	margin:0;
 	margin-top:10px;
 	margin-left:20px;
-	margin-left:-15px;
+
 }
 #contenu span:first-child{
 
@@ -888,27 +734,9 @@ span{
 	text-decoration:none;
 	color:#5C5D5D;
 }
-.bloc_publication{
-border-radius:5px;
-margin-bottom:40px;
-
-}
-
-.allsubmit{
-display:block;
-min-height:35px;
-margin-left:10px;
-cursor:pointer;
-
-}
 body{
 
 	background:url("images/background_accueil.jpg") fixed no-repeat, #c0deed;
-	font-family:arial, sans-serif;
-}
-.deux{
-
-background:url("images/background_accueil.jpg") fixed no-repeat, #c0deed;
 	font-family:arial, sans-serif;
 }
 #header1 td span a:hover {
@@ -980,7 +808,7 @@ background:url("images/background_accueil.jpg") fixed no-repeat, #c0deed;
 	cursor:pointer;
 }
 
-.sendSearch button img{
+button img{
 
 	margin-bottom:-8px;
 	margin-left:-4px;
@@ -994,7 +822,7 @@ background:url("images/background_accueil.jpg") fixed no-repeat, #c0deed;
 	cursor:pointer;
 	padding-bottom:8px;
 }
-.sendSearch button{
+button{
 
 	background:white;
 	border:none;

@@ -12,13 +12,6 @@ $accueil2 = $photo->getSuggestUser1();
 $getTweetPerso = $photo-> getTweetPerso();
 $photo2 = $photo->photoUserPerso();
 $selectThemeUser = $photo->selectThemeUser();
-$countFavoris = $photo->countFavoris($_GET['id']);
-$getFavoris1 = $photo->getFavoris($_GET['id']);
-if(isset($_POST['favoris'])){
-
-$photo->deleteFavoris($_COOKIE['userid'], $_POST['favoris_hidden2']);
-
-}
 if(isset($_POST['deco'])){
 
 	$photo->deconnexion($_POST['deco']);
@@ -82,7 +75,7 @@ else
 					<td><span class="accueil"><a class="surligne" href="message.php" title="Messages">Messages</a></span></td>
 					<td><span><a href="accueil.php" title="icone"><img class="icone" src="images/icone.png" alt="touitteur" width="40" height="40"/></a></span></td>
 					<td><span>
-						<form class="sendSearch" action="search.php" method="post" >
+						<form action="profil.php" method="post" >
 							<input type="search" name="search" id="submit" placeholder="Recherchez sur Twitter"/>
 							<button type="submit" ><img src="images/search1.png" width="25" height="25"/></button>	
 						</form>
@@ -109,10 +102,10 @@ else
 		<?php foreach($photo1 as $v) { ?>
 		<img src="up/<?php echo $v['type']; ?>" width="200" height="200" alt="photo_profil"> 
 		<ul>
-			<?php foreach($countTweet as $v1) { ?><a href="profil.php?id=<?php echo $v['id_user']; ?>"><li><p style="color:<?php echo $couleurBackground; ?>";>TWEETS</p><p><?php echo $v1[0]; ?></p></li></a><?php } ?>
+			<?php foreach($countTweet as $v1) { ?><a href="profil.php?id=<?php echo $v['id_user']; ?>"><li style="border-bottom:4px solid #0084B4"><p style="color:<?php echo $couleurBackground; ?>";>TWEETS</p><p><?php echo $v1[0]; ?></p></li></a><?php } ?>
 				<?php foreach($countFollow as $v2) { ?><a href="following.php?id=<?php echo $v['id_media']; ?>"><li><p >ABONNEMENTS</p><p><?php echo $v2[0]; ?></p></li></a> <?php } ?>
 				<?php foreach($countFollower as $v3) { ?><a href="followers.php?id=<?php echo $v['id_media']; ?>"><li><p>ABONNES</p><p><?php echo $v3[0]; ?></p></li></a> <?php } ?>
-				<?php foreach($countFavoris as $v4) { ?><a href="favoris.php?id=<?php echo $v['id_user']; ?>"><li style="border-bottom:4px solid #0084B4"><p>FAVORIS</p><p><?php echo $v4[0]; ?></p></li></a><?php } ?>
+				<a href=""><li><p>FAVORIS</p><p>0</p></li></a>
 				
 				<li>
 					<p style="margin-right:-450px" id="six">
@@ -149,17 +142,14 @@ else
 			</div>
 			<div class="profilcontenu">
 				<ul>
-					<li><a href="">Favoris</a></li>
+					<li><a href="profil.php?id=<?php echo $v['id_user']; ?>">Tweets</a></li>
+					<li><a href="">Tweets & réponses</a></li>
 				</ul>
-				<?php foreach($getFavoris1 as $f) { ?>
+				<?php foreach($getTweetPerso as $v4) { ?>
 				<div class="profilTweet" >
-					<img class="phototweet" src="up/<?php echo $f['type']; ?>" width="27" height="27" alt="image_profil"/> 
-					<p><span><a href="profil.php?id=<?php echo $f['id_media']; ?>"><?php echo $f['fullname'] . " "; ?></a></span><span><?php echo "@" . $f['login'] . " " . $f['created']; ?></span></p>
-					<p class="contentfav"><?php echo $f['content']; ?></p>
-					<form class="sendSearch1" action="favoris.php?id=<?php echo $_GET['id']; ?>" method="post" > 
-							<p><button  name="favoris"><img src="images/defavoris.png" width="15" height="15" alt="" /></button></p>
-							<input type="hidden" name="favoris_hidden2" value="<?php echo $f['id_user']; ?>"/>
-					</form>
+					<img class="phototweet" src="up/<?php echo $v4['type']; ?>" width="27" height="27" alt="image_profil"/> 
+					<p><span><a href="profil.php?id=<?php echo $v4['id_media']; ?>"><?php echo $v4['fullname'] . " "; ?></a></span><span><?php echo "@" . $v4['login'] . " " . $v4['created']; ?></span></p>
+					<p><?php echo $v4['content']; ?></p>
 				</div>
 				<?php } ?>
 			</div>
