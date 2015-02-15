@@ -13,7 +13,7 @@
 	-webkit-box-shadow: 1px 1px 2px 0px #656565;
 	-o-box-shadow: 1px 1px 2px 0px #656565;
 	box-shadow: 1px 1px 2px 0px #656565;
-	filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=2);
+	
 }
 .un{
 	background:#f5f8fa;
@@ -25,7 +25,7 @@
 	margin:0;
 	text-align:center;
 	margin-left:-260px;
-	border-radius:1px solid #fff;
+	border : 1px solid #fff;
 }
 .profilcontenu2 h5{
 
@@ -88,7 +88,7 @@
 	background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(241,241,241,1) 50%,rgba(225,225,225,1) 51%,rgba(246,246,246,1) 100%); /* Opera 11.10+ */
 	background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(241,241,241,1) 50%,rgba(225,225,225,1) 51%,rgba(246,246,246,1) 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(241,241,241,1) 50%,rgba(225,225,225,1) 51%,rgba(246,246,246,1) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 ); /* IE6-9 */
+	
 
 
 }
@@ -345,7 +345,7 @@ table{
 	margin-top:10px;
 	margin-left:20px;
 	font-size:17px;
-	color:555656;
+	color: #555656;
 }
 .profil_right{
 
@@ -974,4 +974,15 @@ button{
 }
 .menu{
 	margin-left:30px;
+}
+
+#url
+	{
+		color: #0084b4;
+		
+	}
+#url:hover
+{
+	border-bottom:2px solid #0084B4;
+	transition: .4s ease all;
 }

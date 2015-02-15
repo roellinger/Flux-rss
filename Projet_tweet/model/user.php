@@ -9,7 +9,6 @@ Class User
 
 	public function __construct()
 	{
-		
 		try {
 			$this->_db = new PDO('mysql:host=localhost;dbname=tweet', 'root', '');
 		}
@@ -550,23 +549,26 @@ Class User
 						$arobase = "SELECT id_user FROM user WHERE login = :login";
 						$reussite = $this->_db->prepare($arobase);
 						$reussite->execute(array(
-						':login' => $str_arobase,
-						));
-						$reussite->fetchAll();
+							':login' => $str_arobase,
+							));
+						$result_exec = $reussite->fetchAll();
 						$rows  = $reussite->rowCount();
+						
 						
 						if($rows > 0)
 						{
-							var_dump($rows);
-							foreach ($reussite as $value) 
+							
+							foreach ($result_exec as $value) 
 							{
-								$lien = "<a href=profil.php?id=".$value['id_user'] . "> ".$str_arobase . "</a>";
+								$lien = "<a id=url href=profil.php?id=".$value['id_user'] . "> ".$search . $str_arobase . "</a>";
+													
+								
 								return $lien;
 							}
 
 							
 						}
-			
+
 					}
 					else
 					{
@@ -575,79 +577,8 @@ Class User
 					
 				}
 				
-
-
-				// $pattern = "[^@]";	
-				
-
-				// if(preg_match($pattern, $str) == true)
-				// {
-
-
-				// }
-				// else
-				// {
-				// 	echo "pas d'arobase";
-				// }
-
 				return $str;
 			}
-
 		}
-		
-		
 
 		?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

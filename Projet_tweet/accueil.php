@@ -1,7 +1,7 @@
 <?php
-include("header1.php");
+require_once"header1.php";
 
-if (time()-$_SESSION['derniereaction'] > 3600) {
+if (time()-$_SESSION['derniereaction'] > 1600) {
 	
 	session_destroy();
 	setcookie("userid");
@@ -30,8 +30,9 @@ if (time()-$_SESSION['derniereaction'] > 3600) {
 
 	if(isset($_POST['tweet'])){
 
-	
+
 		$retour = $accueil->add_arobase($_POST['publie']);
+
 		$accueil->publicationTweet($_COOKIE['userid'], $retour);
 
 
@@ -118,7 +119,7 @@ if (time()-$_SESSION['derniereaction'] > 3600) {
 									<?php if(!empty($accueil2)) {  foreach($accueil2 as $v2) { ?> <p class="align"><img class="lol4" src="up/<?php echo $v2['type']; ?>" class="avatar2" width="49"  height="49"  alt="avatar" /></p><p class="haut"><a href="profil.php?id=<?php echo $v2['id_user']; ?>"><?php echo $v2['login']; ?></a><span class="petit"> @<?php echo  $v2['login'] ?></span></p>
 									<input type="checkbox" name="checkbox[]" id="submit2" value="<?php echo $v2['id_user']; ?>" />
 
-									<?php } }else { ?> <p class="align">Aucun utilisateur suggerer</p>
+									<?php } }else { ?> <p class="align">Aucun utilisateur suggéré</p>
 									<?php  }  ?>
 
 									<?php if(empty($selectThemeUser)) { ?>
@@ -126,7 +127,7 @@ if (time()-$_SESSION['derniereaction'] > 3600) {
 								</form>
 							</div>
 							<div class="bottom">
-								<p class="droit">© 2015 Twitter À propos Aide Conditions Confidentialité Cookies</p>
+								<p class="droit">© 2015 Touitteur À propos Aide Conditions Confidentialité Cookies</p>
 							</div>
 						</div>
 					</div>
