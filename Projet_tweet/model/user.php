@@ -321,30 +321,50 @@ Class User
 			}
 			
 			
-				public function convertAt($string){
+				function add_arobase($str)
+			{
 				
-					$arobase = "SELECT id_user FROM user WHERE login = :login";
-					$reussite = $this->_db->prepare($arobase);
-					$reussite->execute(array(
-					
-							':login' => $str_arobase,
-					));
-					$result_exec = $reussite->fetchAll();
-					$rows  = $reussite->rowCount();
-						
-						
-					if($rows > 0)
+				$tab = explode(" ", $str);
+				foreach ($tab as $key => $value_tab) 
+				{
+
+					if($value_tab[0] === "@")
 					{
-					
-						foreach ($result_exec as $value) {
+						$search = "@";
+						$replace = "";
+						$subject = $tab;
+
+						$not_arobase = str_replace($search, $replace, $subject); 
+						$str_arobase = implode($not_arobase);
+
+						$arobase = "SELECT id_user FROM user WHERE login = :login";
+						$reussite = $this->_db->prepare($arobase);
+						$reussite->execute(array(
+							':login' => $str_arobase,
+							));
+						$result_exec = $reussite->fetchAll();
+						$rows  = $reussite->rowCount();
 						
-						$lien = "<a id=url href=profil.php?id=".$value['id_user'] . "> ".$search . $str_arobase . "</a>";
-															
+						if($rows > 0)
+						{
+							var_dump($rows);
+							foreach ($result_exec as $value) 
+							{
+								$lien = "<a id=url href=profil.php?id=".$value['id_user'] . "> ".$search .$str_arobase . "</a>";
 								return $lien;
-						}
+								
+							}
 
 							
-					} }
+						}
+
+					}
+					
+				}
+				
+				
+				return $str;
+			}
 						
 			
 			

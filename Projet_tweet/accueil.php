@@ -33,6 +33,9 @@ include_once("header1.php");
 	if(isset($_POST['tweet'])){
 	
 		$string = $accueil->convertHashtag($_POST['publie']);
+
+
+		$string = $accueil->add_arobase($string);
 		$accueil->publicationTweet($_COOKIE['userid'], $string);
 		
 	}
