@@ -5,7 +5,6 @@ $photo = new user();
 $photo1 = $photo->photoUserPerso();
 $GetFollowUser= $photo->GetFollowUser();
 $selectThemeUser = $photo->selectThemeUser();
-$verifFollow1 = $photo->verifFollow1($_COOKIE['userid']);
 if(isset($_COOKIE["couleurtexte"]) && isset($_COOKIE["couleurfond"]))
 {
 	$couleurTexte =$_COOKIE["couleurtexte"]; 
@@ -172,7 +171,7 @@ $countFavoris = $profil->countFavoris($_GET['id']);
 					<a href="profil.php?id=<?php echo $v6['id_user']; ?>"><img src="up/<?php echo $v6['type']; ?>" width="70" height="70" alt="photo_profil"></a>
 					<form action="following.php?id=<?php echo $_GET['id']; ?>" method="post">
 						<?php if(empty($selectThemeUser)) { ?>
-						<input type="submit" name="desabo" style="background:<?php echo "#3B94D9"; ?>"  value="Abonné" class="abo"><?php } else{ if(!empty($verifFollow1)) { ?>  <input type="submit" name="desabo" style="background:<?php echo $v5['id_theme']; ?>"  value="Abonné" class="abo"> <?php  }else{ ?> <input type="submit" name="suivre" style="background:<?php echo $v5['id_theme']; ?>"  value="Suivre" class="suivre">  <?php } } ?>
+						<input type="submit" name="desabo" style="background:<?php echo "#3B94D9"; ?>"  value="Abonné" class="abo"><?php } else{ if($_GET['id'] == $_COOKIE['userid']) { foreach($selectThemeUser as $v5) { ?>  <input type="submit" name="desabo" style="background:<?php echo $v5['id_theme']; ?>"  value="Abonné" class="abo"> <?php } }else{ ?> <input type="submit" name="suivre" style="background:<?php echo $v5['id_theme']; ?>"  value="Suivre" class="suivre">  <?php } } ?>
 						<input type="hidden" name="hiddendesabo" value="<?php echo $v6['id_user']; ?>" />
 					</form>
 					<br>

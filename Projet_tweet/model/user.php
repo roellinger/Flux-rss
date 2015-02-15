@@ -5,6 +5,7 @@ session_start();
 Class User
 {
 
+
 	private $_tweet;
 	private $_photo;
 	private $_actu;
@@ -320,7 +321,7 @@ Class User
 			}
 			
 			
-			function add_arobase($str)
+				function add_arobase($str)
 			{
 				
 				$tab = explode(" ", $str);
@@ -555,7 +556,6 @@ Class User
 				
 				
 				$getTweetPerso = $this->_db->query("select * from tweet inner join media on tweet.id_user = media.id_media inner join user on tweet.id_user = user.id_user where tweet.id_user =" . $_GET['id'] . " and id_origin = 0 order by id_tweet DESC");
-				$getTweetPerso = $this->_db->query("select * from tweet inner join media on tweet.id_user = media.id_media inner join user on tweet.id_user = user.id_user where tweet.id_user =" . $_GET['id'] . " and id_origin = 0 and tweet.id_media = 0 order by id_tweet DESC");
 				return $getTweetPerso;
 				
 				
@@ -737,39 +737,6 @@ Class User
 			
 					}
 					
-					public function envoiTweetUser1($id="", $id2="", $content=""){
-			
-					$envoiTweetUser1 = "insert into tweet (id_user, id_media, created, content) values(:id, :id2, NOW(), :content)";
-					$reussite = $this->_db->prepare($envoiTweetUser1);
-					$reussite->execute(array(
-					':id' => $id,
-					':id2' => $id2,
-					':content' => $content,
-					));
-					return $reussite->fetchAll();
-					$selection = $_GET['id'];
-					header('Location: profil.php?id='.$selection);
-			
-					}		
-					
-					public function verifFollow1($id=""){
-			
-			
-					$GetFollowUser = $this->_db->query("select * from followers inner join user on followers.id_follower = user.id_user inner join media on media.id_media = followers.id_follower where followers.id_user =" . $_GET['id'] . " group by user.id_user");
-
-					foreach($GetFollowUser as $v){		
-				
-					$verifFollow1 = "select id_follower from followers where id_user = :id and id_follower =" . $v['id_follower'];
-					$reussite = $this->_db->prepare($verifFollow1);
-					$reussite->execute(array(
-					':id' => $id
-				
-					));
-					return $reussite->fetchAll();
-					
-					} }	
-
-	
 					public function verifFollow($id="", $id2=""){
 			
 					$verifFollow = "select id_follower from followers where id_user = :id and id_follower = :id2";
@@ -780,77 +747,9 @@ Class User
 					));
 					return $reussite->fetchAll();
 			
-					}					
-					
-					
-						public function envoiTweetUser($id="", $id2=""){
+					}
 			
-					$verifFollow = "select id_follower from followers where id_user = :id and id_follower = :id2";
-					$reussite = $this->_db->prepare($verifFollow);
-					$reussite->execute(array(
-					':id' => $id,
-					':id2' => $id2,
-					));
-					return $reussite->fetchAll();
-			
-					}	
-					
-					public function getRepTweet($id=""){
-			
-					$getRepTweet = "SELECT * FROM `tweet` inner join user on user.id_user = tweet.id_user inner join media on media.id_media = tweet.id_user WHERE tweet.id_user = :id and tweet.id_media != 0";
-					$reussite = $this->_db->prepare($getRepTweet);
-					$reussite->execute(array(
-					':id' => $id,
-
-					));
-					return $reussite->fetchAll();
-			
-					}	
-					
-					
-					public function getArticle($id=""){
-			
-					$getArticle = "select * from tweet inner join user on user.id_user = tweet.id_user inner join media on tweet.id_user = media.id_media where id_tweet = :id";
-					$reussite = $this->_db->prepare($getArticle);
-					$reussite->execute(array(
-					':id' => $id,
-
-					));
-					return $reussite->fetchAll();
-			
-					}	
-					
-					
-					public function repArticle($id_user, $media,  $content){
-			
-					$repArticle = "insert into inbox(id_from_user, id_to_user, content, date) values(:id_user, :media, :content, NOW())";
-					$reussite = $this->_db->prepare($repArticle);
-					$reussite->execute(array(
-					':id_user' => $id_user,
-					':media' => $media,
-					':content' => $content
-
-					));
-					return $reussite;
-					
-					$selection = $_GET['id'];
-					header('Location: commentaires.php?id='.$selection);
-			
-					}	
-					
-						
-					
-					public function getComArticle($id){
-			
-					$getComArticle = "select * from inbox inner join user on user.id_user = inbox.id_from_user inner join media on inbox.id_from_user = media.id_media where id_to_user = :id order by id_msg desc";
-					$reussite = $this->_db->prepare($getComArticle);
-					$reussite->execute(array(
-					':id' => $id
-					));
-					return $reussite;
-			
-						
-					}	
+		
 
 		}
 		
