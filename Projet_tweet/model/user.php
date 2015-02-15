@@ -5,10 +5,18 @@ session_start();
 Class User
 {
 
+
+	private $_tweet;
+	private $_photo;
+	private $_actu;
+	private $_all;
+	private $_follow;
+	private $_data;
 	private $_bdd;
 
 	public function __construct()
 	{
+		
 		try {
 			$this->_db = new PDO('mysql:host=localhost;dbname=tweet', 'root', '');
 		}
@@ -29,7 +37,7 @@ Class User
 
 		if(isset($_POST['submit1'])){
 			
-			if (empty($login_entities&&$mdp_entities&&$mail_entities))
+			if (empty($login_entities) && empty($mdp_entities) && empty($mail_entities))
 			{
 				echo "Veuillez remplir tous les champs";
 				return;
@@ -130,7 +138,6 @@ Class User
 				if($rows == 1) {
 
 					$_SESSION['nom'] = $salutation2['login'];
-					$_SESSION['derniereaction'] = time(); 
 					setcookie("userid", $salutation2['id_user']);
 					header("location: accueil.php");
 					
@@ -291,6 +298,56 @@ Class User
 				
 			}
 			
+			public function convertHashtag($string){
+		
+				$htag = "#";
+				$arr = explode(" ",$string);
+				$arrc = count($arr);
+				$i = 0;
+				while($i < $arrc){
+				
+					if(substr($arr[$i], 0, 1) === $htag){
+					
+						$arr[$i] = "<a class=hashtag href='search.php'>".$arr[$i]."</a>";
+					}
+					
+					$i++;
+					$string = implode(" ", $arr);
+					
+				}
+				
+			
+				return $string;
+			}
+			
+			
+				public function convertAt($string){
+				
+					$arobase = "SELECT id_user FROM user WHERE login = :login";
+					$reussite = $this->_db->prepare($arobase);
+					$reussite->execute(array(
+					
+							':login' => $str_arobase,
+					));
+					$result_exec = $reussite->fetchAll();
+					$rows  = $reussite->rowCount();
+						
+						
+					if($rows > 0)
+					{
+					
+						foreach ($result_exec as $value) {
+						
+						$lien = "<a id=url href=profil.php?id=".$value['id_user'] . "> ".$search . $str_arobase . "</a>";
+															
+								return $lien;
+						}
+
+							
+					} }
+						
+			
+			
 			public function ajoutPhotoUser(){	
 				
 				$dos = "up/";
@@ -394,7 +451,7 @@ Class User
 			
 			public function getTweet(){
 				
-				$tweet = $this->_db->query("SELECT * FROM tweet inner join user on tweet.id_user = user.id_user left join followers on user.id_user = followers.id_follower inner join media on tweet.id_user = media.id_media where followers.id_user =" .$_COOKIE['userid'] . " OR tweet.id_user =" . $_COOKIE['userid'] . " GROUP BY id_tweet order by id_tweet desc");
+				$tweet = $this->_db->query("SELECT * FROM tweet inner join user on tweet.id_user = user.id_user left join followers on user.id_user = followers.id_follower inner join media on tweet.id_user = media.id_media where followers.id_user =" .$_COOKIE['userid'] . " OR tweet.id_user =" . $_COOKIE['userid'] . " and id_origin = 0 GROUP BY id_tweet order by id_tweet desc");
 				return $tweet;
 				
 			}
@@ -478,7 +535,7 @@ Class User
 			public function getTweetPerso(){
 				
 				
-				$getTweetPerso = $this->_db->query("select * from tweet inner join media on tweet.id_user = media.id_media inner join user on tweet.id_user = user.id_user where tweet.id_user =" . $_GET['id'] . " order by id_tweet DESC");
+				$getTweetPerso = $this->_db->query("select * from tweet inner join media on tweet.id_user = media.id_media inner join user on tweet.id_user = user.id_user where tweet.id_user =" . $_GET['id'] . " and id_origin = 0 order by id_tweet DESC");
 				return $getTweetPerso;
 				
 				
@@ -526,59 +583,209 @@ Class User
 					':id2' => $id2
 					));
 				$selection = $_GET['id'];
-				header('Location: following.php?id='.$selection);
+				header('Location: profil.php?id='.$selection);
 				
 			}
 			
-			public function add_arobase($str)
-			{
+			public function getRecherche($post, $id=""){
+					 
+					$this->_data  = "fullname";
+					
+				   $sql1= 'SELECT fullname, biography, type, login, user.id_user FROM user inner join media on user.id_user = media.id_media left join tweet on user.id_user = tweet.id_user WHERE ' . $this->_data . ' LIKE "%' . $post . '%"' . $this->_tweet . 'and user.id_user != :id group by user.id_user';
+					$reponse = $this->_db->prepare($sql1);
+					$reponse->execute( array(
+					
+					':id' => $id
+					
+					));
+					
 				
-				$tab = explode(" ", $str);
-				foreach ($tab as $key => $value_tab) 
-				{
-
-					if($value_tab[0] === "@")
-					{
-						$search = "@";
-						$replace = "";
-						$subject = $tab;
-
-						$not_arobase = str_replace($search, $replace, $subject); 
-						$str_arobase = implode($not_arobase);
-
-						$arobase = "SELECT id_user FROM user WHERE login = :login";
-						$reussite = $this->_db->prepare($arobase);
-						$reussite->execute(array(
-							':login' => $str_arobase,
-							));
-						$result_exec = $reussite->fetchAll();
-						$rows  = $reussite->rowCount();
-						
-						
-						if($rows > 0)
-						{
-							
-							foreach ($result_exec as $value) 
-							{
-								$lien = "<a id=url href=profil.php?id=".$value['id_user'] . "> ".$search . $str_arobase . "</a>";
-													
-								
-								return $lien;
-							}
-
-							
-						}
-
-					}
-					else
-					{
-						echo "pas d'arobase";
+					$value = $reponse->fetchAll();
+					return $value;
+				
+			}
+			
+			public function addFavoris($id_tweet, $id_user, $id_favoris){
+			
+			
+				   $addFavoris= "INSERT INTO favoris (id_tweet, id_user, id_favoris) values(:id_tweet, :id_user, :id_favoris)";
+					$reponse = $this->_db->prepare($addFavoris);
+					$reponse->execute( array(
+					
+					':id_tweet' => $id_tweet,
+					':id_user' => $id_user,
+					':id_favoris' => $id_favoris
+					));
+			
+			}
+			
+			public function countFavoris($id=""){
+			
+					$countFavoris= "SELECT count('id_tweet') from favoris where id_favoris = :id";
+					$reponse = $this->_db->prepare($countFavoris);
+					$reponse->execute( array(
+					
+					':id' => $id
+	
+					));
+					
+					return $reponse;
+			
+			}
+				public function getFavoris($id=""){
+			
+					$getFavoris= "SELECT * from favoris inner join tweet on favoris.id_tweet = tweet.id_tweet inner join user on favoris.id_user = user.id_user inner join media on favoris.id_user = media.id_media where id_favoris = :id";
+					$reponse = $this->_db->prepare($getFavoris);
+					$reponse->execute( array(
+					
+					':id' => $id
+	
+					));
+					
+					return $reponse->fetchAll();
+			
+			}
+			
+			public function deleteFavoris($id="", $id2=""){
+			
+					$desabonnement = "delete FROM favoris WHERE id_favoris = :id and id_user = :id2";
+					$reussite = $this->_db->prepare($desabonnement);
+					$reussite->execute(array(
+					':id' => $id,
+					':id2' => $id2
+					));
+					$selection = $_GET['id'];
+					header('Location: favoris.php?id='.$selection);
+			
+			}
+			
+			public function reTweet($id_user, $created, $content, $id_origin){
+			
+			
+				   $reTweet= "INSERT INTO tweet (id_user, created, content, id_origin) values(:id_user, :created, :content, :id_origin)";
+					$reponse = $this->_db->prepare($reTweet);
+					$reponse->execute( array(
+					
+					':id_user' => $id_user,
+					':created' => $created,
+					':content' => $content,
+					':id_origin' => $id_origin
+				
+					));
+			
+			}
+			
+					public function getRetweet($id=""){
+			
+					$getRetweet= "select * from tweet inner join user on user.id_user = tweet.id_origin inner join media on tweet.id_origin = media.id_media where tweet.id_user = :id";
+					$reponse = $this->_db->prepare($getRetweet);
+					$reponse->execute( array(
+					
+					':id' => $id
+	
+					));
+					
+					return $reponse->fetchAll();
+			
+			}
+			
+					
+			public function deleteReTweet($id="", $id2=""){
+			
+					$deleteReTweet = "delete FROM tweet WHERE id_tweet = :id and id_user = :id2";
+					$reussite = $this->_db->prepare($deleteReTweet);
+					$reussite->execute(array(
+					':id' => $id,
+					':id2' => $id2
+					));
+					$selection = $_GET['id'];
+					header('Location: profil.php?id='.$selection);
+			
+			}
+			
+			
+					public function followProfilUser($id="", $id2=""){
+			
+					$deleteReTweet = "insert into followers(id_user, id_follower) values(:id_user, :id_follower)";
+					$reussite = $this->_db->prepare($deleteReTweet);
+					$reussite->execute(array(
+					':id_user' => $id,
+					':id_follower' => $id2
+					));
+					$selection = $_GET['id'];
+					header('Location: profil.php?id='.$selection);
+			
 					}
 					
-				}
-				
-				return $str;
-			}
+					public function verifFollow($id="", $id2=""){
+			
+					$verifFollow = "select id_follower from followers where id_user = :id and id_follower = :id2";
+					$reussite = $this->_db->prepare($verifFollow);
+					$reussite->execute(array(
+					':id' => $id,
+					':id2' => $id2,
+					));
+					return $reussite->fetchAll();
+			
+					}
+			
+		
+
 		}
+		
+		
 
 		?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

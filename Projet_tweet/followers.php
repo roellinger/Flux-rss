@@ -1,12 +1,12 @@
 <?php
-include("model/user.php");
+include_once("model/user.php");
 
 $photo = new user();
 $photo1 = $photo->photoUserPerso();
 $photo2 = $photo->photoUserPerso();
 $GetFollowUser= $photo->GetFollowerUser();
 $selectThemeUser = $photo->selectThemeUser();
-
+$countFavoris = $photo->countFavoris($_GET['id']);
 if(isset($_COOKIE["couleurtexte"]) && isset($_COOKIE["couleurfond"]))
 {
 	$couleurTexte =$_COOKIE["couleurtexte"]; 
@@ -61,7 +61,7 @@ if(isset($_POST['confirmer1'])){
 					<td><span class="accueil"><a class="surligne" href="message.php" title="Messages">Messages</a></span></td>
 					<td><span><a href="accueil.php" title="icone"><img class="icone" src="images/icone.png" alt="touitteur" width="40" height="40"/></a></span></td>
 					<td><span>
-						<form action="header1.php" method="post" >
+						<form class="sendSearch" action="search.php" method="post" >
 							<input type="search" name="search" id="submit" placeholder="Recherchez sur Twitter"/>
 							<button type="submit" ><img src="images/search1.png" width="25" height="25"/></button>	
 						</form>
@@ -93,7 +93,7 @@ if(isset($_POST['confirmer1'])){
 			<?php foreach($countTweet as $v1) { ?><a href="profil.php?id=<?php echo $v['id_user']; ?>"><li><p>TWEETS</p><p><?php echo $v1[0]; ?></p></li></a><?php } ?>
 			<?php foreach($countFollow as $v2) { ?><a href="following.php?id=<?php echo $v['id_media']; ?>"><li><p>ABONNEMENTS</p><p><?php echo $v2[0]; ?></p></li></a> <?php } ?>
 			<?php foreach($countFollower as $v3) { ?><a href="followers.php?id=<?php echo $v['id_media']; ?>"><li style="border-bottom:4px solid #0084B4"><p style="color:<?php echo $couleurBackground;?>;">ABONNES</p><p><?php echo $v3[0]; ?></p></li></a> <?php } ?>
-				<a href=""><li><p>FAVORIS</p><p>0</p></li></a>
+			<?php foreach($countFavoris as $v4) { ?><a href="favoris.php?id=<?php echo $v['id_user']; ?>"><li><p>FAVORIS</p><p><?php echo $v4[0]; ?></p></li></a><?php } ?>
 				<?php if($v['id_media'] == $_COOKIE['userid']) { ?>
 				<li>
 					<p style="margin-right:-450px" id="six">

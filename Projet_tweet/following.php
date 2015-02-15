@@ -50,7 +50,7 @@ if(isset($_POST['desabo'])){
 					<td><span class="accueil"><a class="surligne" href="message.php" title="Messages">Messages</a></span></td>
 					<td><span><a href="accueil.php" title="icone"><img class="icone" src="images/icone.png" alt="touitteur" width="40" height="40"/></a></span></td>
 					<td><span>
-						<form action="header1.php" method="post" >
+						<form class="sendSearch" action="search.php" method="post" >
 							<input type="search" name="search" id="submit" placeholder="Recherchez sur Twitter"/>
 							<button type="submit" ><img src="images/search1.png" width="25" height="25"/></button>	
 						</form>
@@ -71,7 +71,7 @@ if(isset($_POST['desabo'])){
 	$countFollow =$profil->countFollowUser();
 	$countFollower =$profil->countFollowerUser();
 	$countTweet =$profil->countTweetUser();
-
+$countFavoris = $profil->countFavoris($_GET['id']);
 	$accueil2 = $profil->getSuggestUser1();
 
 	if(isset($_POST['confirmer1'])){
@@ -98,9 +98,9 @@ if(isset($_POST['desabo'])){
 		<ul>
 			<?php foreach($countTweet as $v1) { ?><a href="profil.php?id=<?php echo $v['id_user']; ?>"><li><p>TWEETS</p><p><?php echo $v1[0]; ?></p></li></a><?php } ?>
 			<?php foreach($countFollow as $v2) { ?><a href="following.php?id=<?php echo $v['id_media']; ?>"><li style="border-bottom:4px solid #0084B4"><p style="color:<?php echo $couleurBackground; ?>";>ABONNEMENTS</p><p><?php echo $v2[0]; ?></p></li></a> <?php } ?>
-				<?php foreach($countFollower as $v3) { ?><a href="followers.php?id=<?php echo $v['id_media']; ?>"><li><p>ABONNES</p><p><?php echo $v3[0]; ?></p></li></a> <?php } ?>
-				<a href=""><li><p>FAVORIS</p><p>0</p></li></a>
-				<?php if($v['id_media'] == $_COOKIE['userid']) { ?>
+			<?php foreach($countFollower as $v3) { ?><a href="followers.php?id=<?php echo $v['id_media']; ?>"><li><p>ABONNES</p><p><?php echo $v3[0]; ?></p></li></a> <?php } ?>
+			<?php foreach($countFavoris as $v4) { ?><a href="favoris.php?id=<?php echo $v['id_user']; ?>"><li><p>FAVORIS</p><p><?php echo $v4[0]; ?></p></li></a><?php } ?>
+			<?php if($v['id_media'] == $_COOKIE['userid']) { ?>
 				<li>
 					<p style="margin-right:-450px" id="six">
 						<input type="submit" name="editer" class="editer" value="Editer le profil"/>
@@ -171,7 +171,7 @@ if(isset($_POST['desabo'])){
 					<a href="profil.php?id=<?php echo $v6['id_user']; ?>"><img src="up/<?php echo $v6['type']; ?>" width="70" height="70" alt="photo_profil"></a>
 					<form action="following.php?id=<?php echo $_GET['id']; ?>" method="post">
 						<?php if(empty($selectThemeUser)) { ?>
-						<input type="submit" name="desabo" style="background:<?php echo "#3B94D9"; ?>"  value="Abonné" class="abo"><?php }else{  foreach($selectThemeUser as $v5) { ?>  <input type="submit" name="desabo" style="background:<?php echo $v5['id_theme']; ?>"  value="Abonné" class="abo"> <?php } } ?>
+						<input type="submit" name="desabo" style="background:<?php echo "#3B94D9"; ?>"  value="Abonné" class="abo"><?php } else{ if($_GET['id'] == $_COOKIE['userid']) { foreach($selectThemeUser as $v5) { ?>  <input type="submit" name="desabo" style="background:<?php echo $v5['id_theme']; ?>"  value="Abonné" class="abo"> <?php } }else{ ?> <input type="submit" name="suivre" style="background:<?php echo $v5['id_theme']; ?>"  value="Suivre" class="suivre">  <?php } } ?>
 						<input type="hidden" name="hiddendesabo" value="<?php echo $v6['id_user']; ?>" />
 					</form>
 					<br>

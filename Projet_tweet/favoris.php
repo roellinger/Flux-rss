@@ -7,29 +7,17 @@ if(isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])){
 	$photo1 = $photo->photoUser();
 }
 
-	if(isset($_POST['favoris'])){
-	
-	$photo->addFavoris($_POST['favoris_hidden'], $_POST['favoris_hidden1'], $_COOKIE['userid']);
-	}
-
-	if(isset($_POST['suivreUser'])){
-	
-		$photo->followProfilUser($_COOKIE['userid'], $_POST['hidden_follow']);
-		
-	}
-	if(isset($_POST['desabo'])){
-
-	$photo->desabonnement($_COOKIE['userid'], $_POST['hidden_desabo']);
-	}
 $accueil2 = $photo->getSuggestUser1();
-$verifFollow = $photo->verifFollow($_COOKIE['userid'], $_GET['id']);
-$getTweetPerso = $photo-> getTweetPerso($_GET['id']);
+
+$getTweetPerso = $photo-> getTweetPerso();
 $photo2 = $photo->photoUserPerso();
 $selectThemeUser = $photo->selectThemeUser();
 $countFavoris = $photo->countFavoris($_GET['id']);
-if(isset($_POST['deretweet'])){
+$getFavoris1 = $photo->getFavoris($_GET['id']);
+if(isset($_POST['favoris'])){
 
-$photo->deleteReTweet($_POST['hidden_deretweet'], $_COOKIE['userid']);
+$photo->deleteFavoris($_COOKIE['userid'], $_POST['favoris_hidden2']);
+
 }
 if(isset($_POST['deco'])){
 
@@ -42,7 +30,7 @@ $photo1 = $profil->photoUser();
 $countFollow =$profil->countFollowUser();
 $countFollower =$profil->countFollowerUser();
 $countTweet =$profil->countTweetUser();
-$getRetweet = $profil->getRetweet($_GET['id']);
+
 if(isset($_POST['confirmer1'])){
 	setcookie ('couleurtexte', $_POST['hidden1']);
 	setcookie ('couleurfond', $_POST['hidden'] );
@@ -74,6 +62,7 @@ else
 
 	<meta charset="utf-8"/>
 	<link rel="stylesheet" href="style1.css" type="text/css" />
+	<link rel="stylesheet" href="style3.php" type="text/css" />
 	<script src = "jquery.js" type = "text/javascript"></script>
 	<script src = "inscription.js" type = "text/javascript"></script>
 	<title>Touitteur</title>
@@ -120,15 +109,14 @@ else
 		<?php foreach($photo1 as $v) { ?>
 		<img src="up/<?php echo $v['type']; ?>" width="200" height="200" alt="photo_profil"> 
 		<ul>
-			<?php foreach($countTweet as $v1) { ?><a href="profil.php?id=<?php echo $v['id_user']; ?>"><li style="border-bottom:4px solid #0084B4"><p style="color:<?php echo $couleurBackground; ?>";>TWEETS</p><p><?php echo $v1[0]; ?></p></li></a><?php } ?>
+			<?php foreach($countTweet as $v1) { ?><a href="profil.php?id=<?php echo $v['id_user']; ?>"><li><p style="color:<?php echo $couleurBackground; ?>";>TWEETS</p><p><?php echo $v1[0]; ?></p></li></a><?php } ?>
 				<?php foreach($countFollow as $v2) { ?><a href="following.php?id=<?php echo $v['id_media']; ?>"><li><p >ABONNEMENTS</p><p><?php echo $v2[0]; ?></p></li></a> <?php } ?>
 				<?php foreach($countFollower as $v3) { ?><a href="followers.php?id=<?php echo $v['id_media']; ?>"><li><p>ABONNES</p><p><?php echo $v3[0]; ?></p></li></a> <?php } ?>
-				<?php foreach($countFavoris as $v4) { ?><a href="favoris.php?id=<?php echo $v['id_user']; ?>"><li><p>FAVORIS</p><p><?php echo $v4[0]; ?></p></li></a><?php } ?>
+				<?php foreach($countFavoris as $v4) { ?><a href="favoris.php?id=<?php echo $v['id_user']; ?>"><li style="border-bottom:4px solid #0084B4"><p>FAVORIS</p><p><?php echo $v4[0]; ?></p></li></a><?php } ?>
 				
 				<li>
 					<p style="margin-right:-450px" id="six">
-						<?php if($v['id_media'] == $_COOKIE['userid']) { ?><input type="submit" name="editer" class="editer" value="Editer le profil"/> <?php }else{ ?> <?php if(empty($verifFollow)) { ?> <form class="suivreUser" action="profil.php?id=<?php echo $_GET['id']; ?>" method="post"> <input style="margin-right:-400px" type="submit" name="suivreUser" class="editer1" value="Suivre"/><input type="hidden" name="hidden_follow" value="<?php echo $v['id_user']; ?>"/> </form><?php }else { ?> <form class="suivreUser4" action="profil.php?id=<?php echo $_GET['id']; ?>" method="post"> <input style="margin-right:-400px" type="submit" name="desabo" class="abo" value="Abonnee"/><input type="hidden" name="hidden_desabo" value="<?php echo $v['id_user']; ?>"/> </form> <?php }  } ?>
-	
+						<?php if($v['id_media'] == $_COOKIE['userid']) { ?><input type="submit" name="editer" class="editer" value="Editer le profil"/> <?php }else{ ?> <form class="suivreUser" action="profil.php?id=<?php echo $_GET['id']; ?>" method="post"> <input style="margin-right:-400px" type="submit" name="suivreUser" class="editer" value="Suivre"/> </form><?php } ?>
 						</p>
 						
 					</li>
@@ -158,50 +146,22 @@ else
 				<p class="deletedescription" ><a href="" class="gris"><?php echo "@" . $v['login']; ?></a></p>
 				<p class="deletedescription"><?php echo $v['biography']; ?></p>
 				<p class="deletedescription"><?php echo $v['localisation']; ?></p>
-				<?php if($_GET['id'] != $_COOKIE['userid']){ ?>
-				<button  class="tweeterUser" name="tweetProfilUser">Tweeter</button>
-				<form id="pipi" style="display:none" action="profil.php" method="post" > 
-				<div id="topUser" >
-				</div>
-						<textarea name="tweetUser" class="tweetUser" placeholder="Quoi de neuf ?" ></textarea>	
-						<input type="submit" id="pushtweet" name="submit" />	
-				</form>
-				<?php } ?>
 			</div>
 			<div class="profilcontenu">
 				<ul>
-					<li><a href="profil.php?id=<?php echo $v['id_user']; ?>">Tweets</a></li>
-					<li><a href="">Tweets & réponses</a></li>
+					<li><a href="">Favoris</a></li>
 				</ul>
-				<?php foreach($getTweetPerso as $v4) { ?>
+				<?php foreach($getFavoris1 as $f) { ?>
 				<div class="profilTweet" >
-					<img class="phototweet" src="up/<?php echo $v4['type']; ?>" width="27" height="27" alt="image_profil"/> 
-					<p><span><a href="profil.php?id=<?php echo $v4['id_media']; ?>"><?php echo $v4['fullname'] . " "; ?></a></span><span><?php echo "@" . $v4['login'] . " " . $v4['created']; ?></span></p>
-					<p id="caca"><?php echo $v4['content']; ?></p>
-					<form class="sendSearch1" action="profil.php?id=<?php echo $_GET['id']; ?>" method="post" > 
-								<p id="caca"><button  name="favoris"><img src="images/favoris.png" width="15" height="15" alt="" /></button></p>
-								<input type="hidden" name="favoris_hidden" value="<?php echo $v4['id_tweet']; ?>"/>
-								<input type="hidden" name="favoris_hidden1" value="<?php echo $v4['id_media']; ?>"/>
+					<img class="phototweet" src="up/<?php echo $f['type']; ?>" width="27" height="27" alt="image_profil"/> 
+					<p><span><a href="profil.php?id=<?php echo $f['id_media']; ?>"><?php echo $f['fullname'] . " "; ?></a></span><span><?php echo "@" . $f['login'] . " " . $f['created']; ?></span></p>
+					<p class="contentfav"><?php echo $f['content']; ?></p>
+					<form class="sendSearch1" action="favoris.php?id=<?php echo $_GET['id']; ?>" method="post" > 
+							<p><button  name="favoris"><img src="images/defavoris.png" width="15" height="15" alt="" /></button></p>
+							<input type="hidden" name="favoris_hidden2" value="<?php echo $f['id_user']; ?>"/>
 					</form>
 				</div>
 				<?php } ?>
-					<?php foreach($getRetweet as $v5) {	?>					
-				<div class="profilTweet" >
-				<p id="noneorigin"><?php echo $_SESSION['nom']; ?> a Retweeté</p>
-					<img class="phototweet" src="up/<?php echo $v5['type']; ?>" width="27" height="27" alt="image_profil"/> 
-					<p><span><a href="profil.php?id=<?php echo $v5['id_media']; ?>"><?php echo $v5['fullname'] . " "; ?></a></span><span><?php echo "@" . $v5['login'] . " " . $v5['created']; ?></span></p>
-					<p id="caca"><?php echo $v5['content']; ?></p>
-					<form class="sendSearch1" action="profil.php?id=<?php echo $_GET['id']; ?>" method="post" > 
-							<p id="caca"><button  name="deretweet"><img src="images/retweet.png" width="15" height="15" alt="" /></button></p>
-							<input type="hidden" name="hidden_deretweet" value="<?php echo $v5['id_tweet']; ?>"/>
-					</form>
-					<form class="sendSearch1" action="profil.php?id=<?php echo $_GET['id']; ?>" method="post" > 
-								<p><button  name="favoris"><img src="images/favoris.png" width="15" height="15" alt="" /></button></p>
-								<input type="hidden" name="favoris_hidden" value="<?php echo $v5['id_tweet']; ?>"/>
-								<input type="hidden" name="favoris_hidden1" value="<?php echo $v5['id_media']; ?>"/>
-					</form>
-				</div>
-				<?php  } ?>
 			</div>
 			<div class="profilcontenu">
 				<h5>Suggestions</h5>
@@ -221,4 +181,3 @@ else
 		</div>
 
 	</body>
-

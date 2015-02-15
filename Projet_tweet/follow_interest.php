@@ -1,6 +1,7 @@
+
 <?php
-include("header.php");
-include("model/user.php");
+require_once"header.php";
+include"model/user.php";
 
 
 $follow = new user();
