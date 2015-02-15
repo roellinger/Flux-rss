@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Ven 13 Février 2015 à 09:20
+-- Généré le :  Dim 15 Février 2015 à 15:20
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -31,8 +31,18 @@ USE `tweet`;
 CREATE TABLE IF NOT EXISTS `favoris` (
   `id_tweet` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `id_favoris` int(11) NOT NULL,
   PRIMARY KEY (`id_tweet`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `favoris`
+--
+
+INSERT INTO `favoris` (`id_tweet`, `id_user`, `id_favoris`) VALUES
+(71, 35, 42),
+(104, 43, 43),
+(122, 35, 35);
 
 -- --------------------------------------------------------
 
@@ -45,7 +55,38 @@ CREATE TABLE IF NOT EXISTS `followers` (
   `id_user` int(11) NOT NULL,
   `id_follower` int(11) NOT NULL,
   PRIMARY KEY (`id_follow`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=346 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=410 ;
+
+--
+-- Contenu de la table `followers`
+--
+
+INSERT INTO `followers` (`id_follow`, `id_user`, `id_follower`) VALUES
+(346, 36, 35),
+(348, 38, 36),
+(351, 40, 35),
+(352, 40, 36),
+(353, 40, 38),
+(354, 40, 39),
+(355, 41, 35),
+(356, 41, 36),
+(357, 41, 38),
+(358, 41, 39),
+(359, 41, 40),
+(361, 42, 35),
+(362, 42, 38),
+(363, 42, 39),
+(366, 43, 38),
+(367, 43, 39),
+(368, 43, 41),
+(369, 43, 42),
+(371, 44, 38),
+(372, 44, 39),
+(373, 44, 41),
+(374, 44, 42),
+(375, 44, 43),
+(402, 35, 41),
+(403, 35, 43);
 
 -- --------------------------------------------------------
 
@@ -75,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `info` (
   `id_user` int(11) NOT NULL,
   `activite` varchar(255) NOT NULL,
   PRIMARY KEY (`id_info`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=73 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=80 ;
 
 --
 -- Contenu de la table `info`
@@ -111,7 +152,14 @@ INSERT INTO `info` (`id_info`, `id_user`, `activite`) VALUES
 (69, 32, 'Culture'),
 (70, 33, 'Associations et Caritatif,Technologie</'),
 (71, 34, 'Art, Mode et Design,Culture'),
-(72, 35, 'Art, Mode et Design');
+(72, 35, 'Art, Mode et Design'),
+(73, 36, 'Art, Mode et Design,Culture'),
+(74, 38, 'Art, Mode et Design,Culture'),
+(75, 40, 'Technologie</,Art, Mode et Design'),
+(76, 41, 'Culture,Musique'),
+(77, 42, 'Culture,Musique'),
+(78, 43, 'Sports,TV'),
+(79, 44, 'Associations et Caritatif,Technologie</');
 
 -- --------------------------------------------------------
 
@@ -131,7 +179,14 @@ CREATE TABLE IF NOT EXISTS `media` (
 --
 
 INSERT INTO `media` (`id_media`, `type`, `url`) VALUES
-(35, 'pika.png', '');
+(35, 'pika.png', ''),
+(36, '250px-Carapuce-RFVF.png', ''),
+(38, '10806359_1519696451631540_6363427416848253273_n.jpg', ''),
+(40, '151.png', ''),
+(41, 'noavatar.gif', ''),
+(42, '250px-Carapuce-RFVF.png', ''),
+(43, '151.png', ''),
+(44, 'miaous.jpg', '');
 
 -- --------------------------------------------------------
 
@@ -149,45 +204,16 @@ CREATE TABLE IF NOT EXISTS `tweet` (
   `hashtag` varchar(140) NOT NULL,
   `activate` int(11) NOT NULL,
   PRIMARY KEY (`id_tweet`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=150 ;
 
 --
 -- Contenu de la table `tweet`
 --
 
 INSERT INTO `tweet` (`id_tweet`, `id_user`, `id_media`, `created`, `content`, `id_origin`, `hashtag`, `activate`) VALUES
-(2, 3, 0, '2015-02-08', 'bonjour', 0, '', 0),
-(3, 3, 0, '2015-02-08', 'comment as ? ', 0, '', 0),
-(4, 3, 0, '2015-02-08', 'comment as ? ', 0, '', 0),
-(5, 3, 0, '2015-02-08', 'comment as ? ', 0, '', 0),
-(6, 3, 0, '2015-02-08', 'comment as ? ', 0, '', 0),
-(7, 3, 0, '2015-02-08', 'dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd', 0, '', 0),
-(8, 3, 0, '2015-02-08', 'Hello wordl', 0, '', 0),
-(9, 3, 0, '2015-02-08', 'Hello', 0, '', 0),
-(10, 21, 0, '2015-02-08', 'Hello !', 0, '', 0),
-(11, 21, 0, '2015-02-08', 'fff', 0, '', 0),
-(12, 21, 0, '2015-02-08', 'vvv', 0, '', 0),
-(13, 21, 0, '2015-02-08', 'aa', 0, '', 0),
-(14, 22, 0, '2015-02-08', 'yes', 0, '', 0),
-(15, 3, 0, '2015-02-08', 'T''es fort ma lloutte', 0, '', 0),
-(16, 21, 0, '2015-02-08', 'love', 0, '', 0),
-(17, 20, 0, '2015-02-09', 'incryable', 0, '', 0),
-(18, 20, 0, '2015-02-09', 'youhouuuuuu', 0, '', 0),
-(19, 20, 0, '2015-02-09', 'lol', 0, '', 0),
-(20, 3, 0, '2015-02-09', 'ldjkjd', 0, '', 0),
-(21, 24, 0, '2015-02-09', 'hello ! ', 0, '', 0),
-(22, 24, 0, '2015-02-09', 'Pikaa Pikaaa !!', 0, '', 0),
-(23, 3, 0, '2015-02-10', 'hello', 0, '', 0),
-(24, 3, 0, '2015-02-10', 'bonjour les amis !\r\n', 0, '', 0),
-(25, 27, 0, '2015-02-10', 'Pikaaa gus !!', 0, '', 0),
-(26, 29, 0, '2015-02-10', 'hello je suis une pute', 0, '', 0),
-(27, 3, 0, '2015-02-10', 'hello ! ', 0, '', 0),
-(28, 30, 0, '2015-02-11', 'coucou', 0, '', 0),
-(29, 24, 0, '2015-02-12', 'bb', 0, '', 0),
-(30, 3, 0, '2015-02-12', ':)\r\n', 0, '', 0),
-(31, 3, 0, '2015-02-12', 'hello ! ', 0, '', 0),
-(32, 32, 0, '2015-02-12', 'Pikachuuuuuuu !!! ', 0, '', 0),
-(33, 33, 0, '2015-02-13', 'Caraaapuceee !!', 0, '', 0);
+(145, 35, 0, '2015-02-15', 'Pikaaa !', 0, '', 0),
+(146, 44, 0, '2015-02-15', 'Miaouusss', 0, '', 0),
+(149, 35, 0, '2015-02-15', 'dd', 0, '', 0);
 
 -- --------------------------------------------------------
 
@@ -212,14 +238,20 @@ CREATE TABLE IF NOT EXISTS `user` (
   `localisation` varchar(255) NOT NULL,
   `id_theme` varchar(255) NOT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=45 ;
 
 --
 -- Contenu de la table `user`
 --
 
 INSERT INTO `user` (`id_user`, `biography`, `login`, `password`, `fullname`, `mail`, `f_name`, `l_name`, `date_register`, `follows`, `activate`, `privacy`, `key_activation`, `localisation`, `id_theme`) VALUES
-(35, '', 'Pikachu', 'test', 'Pikachu deSacha', 'roellinger.robin@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, '', 'rgb(221, 46, 68) none repeat scroll 0% 0% / auto padding-box border-box');
+(35, 'Pika Pikaaa', 'Pikachu', 'test', 'Pikachu deSacha', 'roellinger.robin@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, '', 'rgb(221, 46, 68) none repeat scroll 0% 0% / auto padding-box border-box'),
+(38, 'Mmmh le caca c''est delicieux !! ', 'orane', '5e52fee47e6b070565f74372468cdc699de89107', 'orane', 'orane@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, 'Paris', 'rgb(250, 116, 62) none repeat scroll 0% 0% / auto padding-box border-box'),
+(39, '', 'Salameche', '2ad5bf35987417ba7fd8db75e3e46fdfa8e89e19', 'Sala', 'sala@gmail.com', '', '', '0000-00-00 00:00:00', '', 0, 0, 0, '', ''),
+(41, '', 'test123', '2ad5bf35987417ba7fd8db75e3e46fdfa8e89e19', 'test123', 'test@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, '', 'rgb(146, 102, 204) none repeat scroll 0% 0% / auto padding-box border-box'),
+(42, 'Pistolet a oo', 'Carapuce', '2ad5bf35987417ba7fd8db75e3e46fdfa8e89e19', 'carapuce', 'cara@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, '', 'rgb(137, 201, 250) none repeat scroll 0% 0% / auto padding-box border-box'),
+(43, 'Je suis le plus fort des pokemon, My name is Mew', 'Mewmew', '2ad5bf35987417ba7fd8db75e3e46fdfa8e89e19', 'mew pokemon', 'mew@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, '?', 'rgb(146, 102, 204) none repeat scroll 0% 0% / auto padding-box border-box'),
+(44, '', 'Miaous ', '2ad5bf35987417ba7fd8db75e3e46fdfa8e89e19', 'miaous pokemon', 'miaous@gmail.com', '', '', '0000-00-00 00:00:00', '', 1, 0, 0, '', '');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
