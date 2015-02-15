@@ -6,6 +6,12 @@ $photo = new user();
 if(isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])){
 	$photo1 = $photo->photoUser();
 }
+	if(isset($_POST['pushtweet'])){
+	
+	$string = $photo->convertHashtag($_POST['tweetUser']);
+	$string = $photo->add_arobase($string);
+	$photo->envoiTweetUser1($_COOKIE['userid'], $_GET['id'], $string);
+	}
 
 	if(isset($_POST['favoris'])){
 	
@@ -22,11 +28,11 @@ if(isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])){
 	$photo->desabonnement($_COOKIE['userid'], $_POST['hidden_desabo']);
 	}
 $accueil2 = $photo->getSuggestUser1();
-$verifFollow = $photo->verifFollow($_COOKIE['userid'], $_GET['id']);
 $getTweetPerso = $photo-> getTweetPerso($_GET['id']);
 $photo2 = $photo->photoUserPerso();
 $selectThemeUser = $photo->selectThemeUser();
 $countFavoris = $photo->countFavoris($_GET['id']);
+$verifFollow = $photo->verifFollow($_COOKIE['userid'], $_GET['id']);
 if(isset($_POST['deretweet'])){
 
 $photo->deleteReTweet($_POST['hidden_deretweet'], $_COOKIE['userid']);
@@ -128,7 +134,6 @@ else
 				<li>
 					<p style="margin-right:-450px" id="six">
 						<?php if($v['id_media'] == $_COOKIE['userid']) { ?><input type="submit" name="editer" class="editer" value="Editer le profil"/> <?php }else{ ?> <?php if(empty($verifFollow)) { ?> <form class="suivreUser" action="profil.php?id=<?php echo $_GET['id']; ?>" method="post"> <input style="margin-right:-400px" type="submit" name="suivreUser" class="editer1" value="Suivre"/><input type="hidden" name="hidden_follow" value="<?php echo $v['id_user']; ?>"/> </form><?php }else { ?> <form class="suivreUser4" action="profil.php?id=<?php echo $_GET['id']; ?>" method="post"> <input style="margin-right:-400px" type="submit" name="desabo" class="abo" value="Abonnee"/><input type="hidden" name="hidden_desabo" value="<?php echo $v['id_user']; ?>"/> </form> <?php }  } ?>
-	
 						</p>
 						
 					</li>
@@ -160,18 +165,21 @@ else
 				<p class="deletedescription"><?php echo $v['localisation']; ?></p>
 				<?php if($_GET['id'] != $_COOKIE['userid']){ ?>
 				<button  class="tweeterUser" name="tweetProfilUser">Tweeter</button>
-				<form id="pipi" style="display:none" action="profil.php" method="post" > 
+				<form id="pipi" style="display:none" action="profil.php?id=<?php echo $_GET['id']; ?>" method="post" > 
 				<div id="topUser" >
+					<p>Tweeter a <?php echo $v['fullname']; ?></p>
 				</div>
-						<textarea name="tweetUser" class="tweetUser" placeholder="Quoi de neuf ?" ></textarea>	
-						<input type="submit" id="pushtweet" name="submit" />	
+						<textarea name="tweetUser" class="tweetUser" placeholder="Quoi de neuf ?" >@<?php echo $v['login']; ?></textarea>	
+						<span class='count1'>140</span>
+						<input type="submit" id="pushtweet" name="pushtweet" />	
+					
 				</form>
 				<?php } ?>
 			</div>
 			<div class="profilcontenu">
 				<ul>
 					<li><a href="profil.php?id=<?php echo $v['id_user']; ?>">Tweets</a></li>
-					<li><a href="">Tweets & réponses</a></li>
+					<li><a href="rep_tweet.php?id=<?php echo $v['id_user']; ?>">Tweets & réponses</a></li>
 				</ul>
 				<?php foreach($getTweetPerso as $v4) { ?>
 				<div class="profilTweet" >
