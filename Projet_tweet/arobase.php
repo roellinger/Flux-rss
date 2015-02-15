@@ -21,3 +21,27 @@ public function convertAt($string){
 
 							
 					} }
+
+
+//acceuil//
+if(isset($_POST['tweet'])){
+
+
+		$retour = $accueil->add_arobase($_POST['publie']);
+
+		$accueil->publicationTweet($_COOKIE['userid'], $retour);
+
+
+	}
+
+//css//
+#url
+	{
+		color: #0084b4;
+		
+	}
+#url:hover
+{
+	border-bottom:2px solid #0084B4;
+	transition: .4s ease all;
+}
