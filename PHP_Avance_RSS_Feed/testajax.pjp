@@ -1,0 +1,16 @@
+
+			
+			if($content != -1){
+			
+			if(filter_var($content, FILTER_VALIDATE_URL)){
+			
+			$publieFLux = "INSERT INTO suggest_flux (id_user, content, date) VALUES(:id, :content, NOW()) ";
+			$reussite = $this->_db->prepare($publieFLux);
+			$reussite->bindParam(':id', $id, PDO::PARAM_INT);
+			$reussite->bindParam(':content', $content, PDO::PARAM_STR);
+			$reussite->execute();
+			
+			
+			}
+			}
+			
