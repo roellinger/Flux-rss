@@ -1,3 +1,3 @@
-# Projet_tweet (2013)
+# Projet_RSS (2013)
 
-projet d'école qui consiste à créer un twitter
+projet d'école qui consiste à utiliser les flux RSS en php
